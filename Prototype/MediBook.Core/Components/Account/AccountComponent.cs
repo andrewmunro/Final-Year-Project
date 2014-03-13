@@ -11,7 +11,6 @@ namespace MediBook.Client.Core.Components.Account
         public AccountComponent(AppCore core)
             : base(core)
         {
-           this.Register("andrew", "password");
         }
 
         public async void Register(string username, string password)

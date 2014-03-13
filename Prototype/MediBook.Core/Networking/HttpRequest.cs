@@ -13,7 +13,7 @@ namespace MediBook.Client.Core.Networking
 
         public HttpRequest(String requestUrl, Method httpMethod)
         {
-            this.Client = new RestClient("http://10.0.0.197:1337/");
+            this.Client = new RestClient("http://localhost:1337/");
             this.Request = new RestRequest("api/" + requestUrl, httpMethod);
         }
 

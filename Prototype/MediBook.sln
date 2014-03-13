@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediBook.Server.DumbSchedul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediBook.Server", "MediBook.Server\MediBook.Server.csproj", "{68DB6858-9E4C-4031-B2FE-B0DCB952D20C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediBook.Testing", "MediBook.Testing\MediBook.Testing.csproj", "{34121A7D-2F60-47EF-97F4-8F52425CB798}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,16 @@ Global
 		{68DB6858-9E4C-4031-B2FE-B0DCB952D20C}.Release|ARM.ActiveCfg = Release|Any CPU
 		{68DB6858-9E4C-4031-B2FE-B0DCB952D20C}.Release|x64.ActiveCfg = Release|Any CPU
 		{68DB6858-9E4C-4031-B2FE-B0DCB952D20C}.Release|x86.ActiveCfg = Release|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Release|ARM.ActiveCfg = Release|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Release|x64.ActiveCfg = Release|Any CPU
+		{34121A7D-2F60-47EF-97F4-8F52425CB798}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
