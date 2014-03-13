@@ -29,6 +29,7 @@
 
 \graphicspath{{Pictures/}} % Specifies the directory where pictures are stored
 
+\usepackage{comment}
 \usepackage[square, numbers, comma, sort&compress]{natbib} % Use the natbib reference package - read up on this to edit the reference style; if you want text (e.g. Smith et al., 2012) for the in-text references (instead of numbers), remove 'numbers' 
 \hypersetup{urlcolor=blue, colorlinks=true} % Colors hyperlinks in blue - change to black if annoying
 \title{\ttitle} % Defines the thesis title - don't touch this
@@ -62,7 +63,8 @@
 \begin{center}
 
 \textsc{\LARGE \univname}\\[1.5cm] % University name
-\textsc{\Large Final Year Project}\\[0.5cm] % Thesis type
+\textsc{\Large Final Year Project}\\[0.5cm] % Thesis 
+\Large \textit{Mid Project Report}\\[0.5cm]
 
 \HRule \\[0.4cm] % Horizontal line
 {\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
@@ -81,7 +83,7 @@
 \end{flushright}
 \end{minipage}\\[3cm]
  
-\large \textit{A report submitted in fulfilment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
+\large \textit{A final year project report submitted in fulfilment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
 \textit{in the}\\[0.4cm]
 \deptname\\[2cm] % Research group name and department name
  
@@ -122,8 +124,9 @@ Date:\\
 
 \clearpage % Start a new page
 
+\begin{comment}
 %----------------------------------------------------------------------------------------
-%	QUOTATION PAGE
+%	QUOTATION PAGE\usepackage{comment}
 %----------------------------------------------------------------------------------------
 
 \pagestyle{empty} % No headers or footers for the following pages
@@ -138,8 +141,9 @@ Dave Barry
 
 \vfill\vfill\vfill\vfill\vfill\vfill\null % Add some space at the bottom to position the quote just right
 
-\clearpage % Start a new page
+\clearpage  Start a new page
 
+\end{comment}
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
@@ -148,11 +152,13 @@ Dave Barry
 
 \abstract{\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
 
-The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
-}
+This project aims to optimise and simplify the medical appointment scheduling process, making it easier and more convenient for both patients and doctors. It also aims to tackle various problems such as attendance, costs and patient satisfaction, by using emerging technology to bridge the current communication gap between patients and the scheduling systems used.
+
+This project is incomplete and submitted as my mid-project report for feedback and advice. Many of these sections are left blank as they are to be completed later, however I have included them for as an overview of the overall structure.
 
 \clearpage % Start a new page
 
+\begin{comment}
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
 %----------------------------------------------------------------------------------------
@@ -164,6 +170,8 @@ The Thesis Abstract is written here (and usually kept to just this page). The pa
 The acknowledgements and the people to thank go here, don't forget to include your project advisor\ldots
 }
 \clearpage % Start a new page
+
+\end{comment}
 
 %----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
@@ -177,8 +185,10 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 \lhead{\emph{List of Figures}} % Set the left side page header to "List of Figures"
 \listoffigures % Write out the List of Figures
 
+\begin{comment}
 \lhead{\emph{List of Tables}} % Set the left side page header to "List of Tables"
 \listoftables % Write out the List of Tables
+\end{comment}
 
 %----------------------------------------------------------------------------------------
 %	ABBREVIATIONS
@@ -191,55 +201,10 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 \lhead{\emph{Abbreviations}} % Set the left side page header to "Abbreviations"
 \listofsymbols{ll} % Include a list of Abbreviations (a table of two columns)
 {
-\textbf{LAH} & \textbf{L}ist \textbf{A}bbreviations \textbf{H}ere \\
+\textbf{NHS} & \textbf{N}ational \textbf{H}ealth \textbf{S}ervice \\
+\textbf{APP} & \textbf{APP}lication (Computer Program) \\
 %\textbf{Acronym} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or \\
 }
-
-%----------------------------------------------------------------------------------------
-%	PHYSICAL CONSTANTS/OTHER DEFINITIONS
-%----------------------------------------------------------------------------------------
-
-\clearpage % Start a new page
-
-\lhead{\emph{Physical Constants}} % Set the left side page header to "Physical Constants"
-
-\listofconstants{lrcl} % Include a list of Physical Constants (a four column table)
-{
-Speed of Light & $c$ & $=$ & $2.997\ 924\ 58\times10^{8}\ \mbox{ms}^{-\mbox{s}}$ (exact)\\
-% Constant Name & Symbol & = & Constant Value (with units) \\
-}
-
-%----------------------------------------------------------------------------------------
-%	SYMBOLS
-%----------------------------------------------------------------------------------------
-
-\clearpage % Start a new page
-
-\lhead{\emph{Symbols}} % Set the left side page header to "Symbols"
-
-\listofnomenclature{lll} % Include a list of Symbols (a three column table)
-{
-$a$ & distance & m \\
-$P$ & power & W (Js$^{-1}$) \\
-% Symbol & Name & Unit \\
-
-& & \\ % Gap to separate the Roman symbols from the Greek
-
-$\omega$ & angular frequency & rads$^{-1}$ \\
-% Symbol & Name & Unit \\
-}
-
-%----------------------------------------------------------------------------------------
-%	DEDICATION
-%----------------------------------------------------------------------------------------
-
-\setstretch{1.3} % Return the line spacing back to 1.3
-
-\pagestyle{empty} % Page style needs to be empty for this page
-
-\dedicatory{For/Dedicated to/To my\ldots} % Dedication text
-
-\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - CHAPTERS
@@ -271,7 +236,7 @@ $\omega$ & angular frequency & rads$^{-1}$ \\
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
-\input{Appendices/AppendixA}
+\input{Appendices/EthicalIssues}
 %\input{Appendices/AppendixB}
 %\input{Appendices/AppendixC}
 
