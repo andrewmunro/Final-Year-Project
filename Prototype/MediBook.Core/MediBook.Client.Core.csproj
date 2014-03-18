@@ -35,18 +35,16 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Account\Models\Account.cs" />
     <Compile Include="Components\Account\AccountComponent.cs" />
+    <Compile Include="Components\Account\Requests\Post\PostLoginAccount.cs" />
     <Compile Include="Components\Account\Requests\Post\PostRegisterAccount.cs" />
     <Compile Include="Components\Appointment\AppointmentComponent.cs" />
     <Compile Include="Components\ComponentBase.cs" />
     <Compile Include="Components\Account\Requests\Get\GetAccount.cs" />
+    <Compile Include="Components\Database\DatabaseComponent.cs" />
     <Compile Include="Networking\GetRequest.cs" />
     <Compile Include="Networking\PostRequest.cs" />
     <Compile Include="Networking\HttpRequest.cs" />
@@ -61,6 +59,9 @@
     <Compile Include="Components\Appointment\Models\Appointment.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

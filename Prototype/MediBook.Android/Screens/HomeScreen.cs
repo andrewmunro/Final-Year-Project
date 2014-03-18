@@ -4,7 +4,7 @@ using Android.Widget;
 
 namespace MediBook.Client.Android.Screens
 {
-    [Activity(Label = "MediBook", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "MediBook", Icon = "@drawable/icon")]
     public class HomeScreen : Activity
     {
         private ListView Appointments { get { return this.FindViewById<ListView>(Resource.Id.AppointmentList); } }
@@ -13,7 +13,6 @@ namespace MediBook.Client.Android.Screens
         {
             base.OnCreate(bundle);
 
-            // Set our view from the "main" layout resource
             this.SetContentView(Resource.Layout.Main);
         }
     }

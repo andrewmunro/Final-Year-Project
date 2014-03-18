@@ -41,6 +41,25 @@ namespace MediBook.Client.Android
 			}
 		}
 		
+		public partial class Dimension
+		{
+			
+			// aapt resource value: 0x7f040001
+			public const int activity_horizontal_margin = 2130968577;
+			
+			// aapt resource value: 0x7f040000
+			public const int activity_vertical_margin = 2130968576;
+			
+			static Dimension()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Dimension()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
@@ -63,8 +82,26 @@ namespace MediBook.Client.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f060000
-			public const int AppointmentList = 2131099648;
+			// aapt resource value: 0x7f070006
+			public const int AppointmentList = 2131165190;
+			
+			// aapt resource value: 0x7f070000
+			public const int bodyText = 2131165184;
+			
+			// aapt resource value: 0x7f070005
+			public const int loginButton = 2131165189;
+			
+			// aapt resource value: 0x7f070004
+			public const int passwordInput = 2131165188;
+			
+			// aapt resource value: 0x7f070003
+			public const int passwordText = 2131165187;
+			
+			// aapt resource value: 0x7f070001
+			public const int username = 2131165185;
+			
+			// aapt resource value: 0x7f070002
+			public const int usernameInput = 2131165186;
 			
 			static Id()
 			{
@@ -80,7 +117,10 @@ namespace MediBook.Client.Android
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int Login = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int Main = 2130903041;
 			
 			static Layout()
 			{
@@ -95,11 +135,17 @@ namespace MediBook.Client.Android
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int ApplicationName = 2130968577;
+			// aapt resource value: 0x7f050000
+			public const int bodyText = 2131034112;
 			
-			// aapt resource value: 0x7f040000
-			public const int Hello = 2130968576;
+			// aapt resource value: 0x7f050003
+			public const int loginButtonText = 2131034115;
+			
+			// aapt resource value: 0x7f050002
+			public const int password = 2131034114;
+			
+			// aapt resource value: 0x7f050001
+			public const int username = 2131034113;
 			
 			static String()
 			{
@@ -114,8 +160,8 @@ namespace MediBook.Client.Android
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f050000
-			public const int Mono_Android_Theme_Splash = 2131034112;
+			// aapt resource value: 0x7f060000
+			public const int Mono_Android_Theme_Splash = 2131099648;
 			
 			static Style()
 			{

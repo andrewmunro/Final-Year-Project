@@ -1,4 +1,5 @@
-﻿using MediBook.Client.Core.Database;
+﻿using MediBook.Client.Core.Components.Database;
+using MediBook.Client.Core.Database;
 
 namespace MediBook.Client.Core.Components.Appointment
 {
@@ -8,7 +9,8 @@ namespace MediBook.Client.Core.Components.Appointment
 
         public AppointmentComponent(AppCore core) : base(core)
         {
-            this.AppointmentDatabase = new UnitOfWork<Models.Appointment>(this.Core.DatabaseConnection);
+            //TODO Refactor
+            this.AppointmentDatabase = new UnitOfWork<Models.Appointment>(this.Core.GetComponent<DatabaseComponent>().DatabaseConnection);
         }
     }
 }

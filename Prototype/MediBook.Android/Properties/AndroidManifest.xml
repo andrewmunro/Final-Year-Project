@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionCode="1">
-	<uses-sdk android:minSdkVersion="8" />
-	<application android:label="Threads" android:icon="@drawable/Icon"></application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="internalOnly" android:versionCode="1">
+	<uses-sdk android:minSdkVersion="10" />
+	<application android:label="MediBook" android:icon="@drawable/Icon"></application>
 	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>

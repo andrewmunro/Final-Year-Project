@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\ConfigurationManager.cs" />
     <Compile Include="Constants\Appointment\AppointmentStatus.cs" />
     <Compile Include="Constants\Appointment\AppointmentType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

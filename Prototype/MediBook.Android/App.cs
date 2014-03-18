@@ -12,7 +12,7 @@ namespace MediBook.Client.Android
     {
         public static App Current { get; private set; }
 
-        public AppCore AppCore { get; private set; }
+        public static AppCore AppCore { get; private set; }
 
         public App(IntPtr handle, JniHandleOwnership transfer) : base(handle, transfer) 
         {
@@ -23,7 +23,7 @@ namespace MediBook.Client.Android
         {
             base.OnCreate();
 
-            this.AppCore = new AppCore();
+            AppCore = new AppCore();
         }
     }
 }

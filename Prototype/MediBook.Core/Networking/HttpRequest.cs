@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using MediBook.Shared.Config;
+
 using RestSharp;
 
 namespace MediBook.Client.Core.Networking
@@ -13,13 +15,18 @@ namespace MediBook.Client.Core.Networking
 
         public HttpRequest(String requestUrl, Method httpMethod)
         {
-            this.Client = new RestClient("http://localhost:1337/");
+            this.Client = new RestClient(ConfigurationManager.AppSettings["ServerUrl"]);
             this.Request = new RestRequest("api/" + requestUrl, httpMethod);
         }
 
         public async Task<IRestResponse> Execute()
         {
             return await this.ExecuteAwait();
+        }
+
+        public async Task<T> Execute<T>()
+        {
+            return await this.ExecuteAwait<T>();
         }
 
         public Task<IRestResponse> ExecuteAwait()
@@ -34,6 +41,23 @@ namespace MediBook.Client.Core.Networking
                 else
                 {
                     taskCompletionSource.SetResult(response);
+                }
+            });
+            return taskCompletionSource.Task;
+        }
+
+        public Task<T> ExecuteAwait<T>()
+        {
+            var taskCompletionSource = new TaskCompletionSource<T>();
+            this.Client.ExecuteAsync<T>(this.Request, (response, asyncHandle) =>
+            {
+                if (response.ResponseStatus == ResponseStatus.Error)
+                {
+                    taskCompletionSource.SetException(response.ErrorException);
+                }
+                else
+                {
+                    taskCompletionSource.SetResult(response.Data);
                 }
             });
             return taskCompletionSource.Task;
