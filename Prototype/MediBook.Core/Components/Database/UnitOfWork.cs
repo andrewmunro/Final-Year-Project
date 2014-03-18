@@ -1,6 +1,8 @@
 ﻿using System;
 
-namespace MediBook.Client.Core.Database
+using MediBook.Client.Core.Database;
+
+namespace MediBook.Client.Core.Components.Database
 {
     public class UnitOfWork<T> : IUnitOfWork where T : class, new()
     {

@@ -31,14 +31,13 @@ namespace MediBook.Testing
         public async Task RegisterAccount()
         {
             var username = "testuser" + new Random().Next();
-            var response = await AccountComponent.Register(username, "Password");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            await AccountComponent.Register(username, "password");
         }
 
         [TestMethod]
         public async Task LoginAccount()
         {
-            var response = await AccountComponent.Login("andrew", "password");
+            var response = await AccountComponent.Login("Andrew", "Password");
             Assert.IsNotNull(response.AccessToken);
             Assert.IsNotNull(response.Expires);
             Assert.IsNotNull(response.ExpiresIn);

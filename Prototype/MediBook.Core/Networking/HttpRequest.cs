@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-
-using MediBook.Shared.Config;
-
+using MediBook.Client.Core.Config;
 using RestSharp;
 
 namespace MediBook.Client.Core.Networking
@@ -15,7 +13,7 @@ namespace MediBook.Client.Core.Networking
 
         public HttpRequest(String requestUrl, Method httpMethod)
         {
-            this.Client = new RestClient(ConfigurationManager.AppSettings["ServerUrl"]);
+            this.Client = new RestClient(Configuration.ServerUrl);
             this.Request = new RestRequest("api/" + requestUrl, httpMethod);
         }
 

@@ -82,20 +82,26 @@ namespace MediBook.Client.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070006
-			public const int AppointmentList = 2131165190;
+			// aapt resource value: 0x7f070008
+			public const int AppointmentList = 2131165192;
 			
 			// aapt resource value: 0x7f070000
 			public const int bodyText = 2131165184;
 			
 			// aapt resource value: 0x7f070005
-			public const int loginButton = 2131165189;
+			public const int errorText = 2131165189;
+			
+			// aapt resource value: 0x7f070006
+			public const int loginButton = 2131165190;
 			
 			// aapt resource value: 0x7f070004
 			public const int passwordInput = 2131165188;
 			
 			// aapt resource value: 0x7f070003
 			public const int passwordText = 2131165187;
+			
+			// aapt resource value: 0x7f070007
+			public const int registerButton = 2131165191;
 			
 			// aapt resource value: 0x7f070001
 			public const int username = 2131165185;
@@ -143,6 +149,9 @@ namespace MediBook.Client.Android
 			
 			// aapt resource value: 0x7f050002
 			public const int password = 2131034114;
+			
+			// aapt resource value: 0x7f050004
+			public const int registerButtonText = 2131034116;
 			
 			// aapt resource value: 0x7f050001
 			public const int username = 2131034113;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MediBook.Client.Core.Database
+namespace MediBook.Client.Core.Components.Database
 {
     public interface IRepository<T> where T : class
     {

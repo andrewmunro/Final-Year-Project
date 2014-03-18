@@ -53,13 +53,33 @@
         android:layout_alignLeft="@+id/usernameInput"
         android:ems="10"
         android:inputType="textPassword" />
-    <Button
-        android:id="@+id/loginButton"
+    <TextView
+        android:id="@+id/errorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/passwordInput"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="94dp"
+        android:layout_marginTop="30dp"
+        android:text="Generic Error Message"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#EE2C2C"
+        android:visibility="invisible" />
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/errorText"
+        android:layout_marginTop="25dp"
         android:onClick="Login"
-        android:text="@string/loginButtonText" />
+        android:text="@string/loginButtonText"
+        android:layout_marginLeft="45dp" />
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/loginButton"
+        android:layout_toRightOf="@+id/loginButton"
+        android:layout_marginTop="10dp"
+        android:onClick="Register"
+        android:text="@string/registerButtonText" />
 </RelativeLayout>

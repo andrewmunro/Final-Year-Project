@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 
+using MediBook.Client.Core.Config;
 using MediBook.Client.Core.Database;
-using MediBook.Shared.Config;
 
 namespace MediBook.Client.Core.Components.Database
 {
@@ -14,7 +14,7 @@ namespace MediBook.Client.Core.Components.Database
             : base(core)
         {
             var libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var path = Path.Combine(libraryPath, ConfigurationManager.AppSettings["DBName"]);
+            var path = Path.Combine(libraryPath, Configuration.DBName);
             this.DatabaseConnection = new SQLiteConnection(path);
         }
     }

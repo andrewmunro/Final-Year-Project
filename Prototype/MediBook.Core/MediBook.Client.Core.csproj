@@ -37,31 +37,33 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Account\Models\Account.cs" />
+    <Compile Include="Components\Account\Models\RegistrationResponse.cs" />
+    <Compile Include="Components\Account\Models\TokenResponse.cs" />
     <Compile Include="Components\Account\AccountComponent.cs" />
     <Compile Include="Components\Account\Requests\Post\PostLoginAccount.cs" />
     <Compile Include="Components\Account\Requests\Post\PostRegisterAccount.cs" />
     <Compile Include="Components\Appointment\AppointmentComponent.cs" />
     <Compile Include="Components\ComponentBase.cs" />
-    <Compile Include="Components\Account\Requests\Get\GetAccount.cs" />
     <Compile Include="Components\Database\DatabaseComponent.cs" />
+    <Compile Include="Config\Configuration.cs" />
+    <Compile Include="Exceptions\AuthException.cs" />
+    <Compile Include="Exceptions\RegistrationException.cs" />
+    <Compile Include="Networking\AuthGetRequest.cs" />
+    <Compile Include="Networking\AuthPostRequest.cs" />
     <Compile Include="Networking\GetRequest.cs" />
     <Compile Include="Networking\PostRequest.cs" />
     <Compile Include="Networking\HttpRequest.cs" />
     <Compile Include="Components\Patient\PatientComponent.cs" />
-    <Compile Include="Database\IUnitOfWork.cs" />
-    <Compile Include="Database\IRepository.cs" />
-    <Compile Include="Database\SQLite.cs" />
-    <Compile Include="Database\Repository.cs" />
-    <Compile Include="Database\UnitOfWork.cs" />
+    <Compile Include="Components\Database\IUnitOfWork.cs" />
+    <Compile Include="Components\Database\IRepository.cs" />
+    <Compile Include="Components\Database\SQLite.cs" />
+    <Compile Include="Components\Database\Repository.cs" />
+    <Compile Include="Components\Database\UnitOfWork.cs" />
     <Compile Include="AppCore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\Appointment\Models\Appointment.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +73,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Components\Account\Requests\Get\" />
     <Folder Include="Components\Appointment\Requests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

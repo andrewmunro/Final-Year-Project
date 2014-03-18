@@ -1,4 +1,4 @@
-﻿namespace MediBook.Client.Core.Database
+﻿namespace MediBook.Client.Core.Components.Database
 {
     public interface IUnitOfWork
     {
