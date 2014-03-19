@@ -12,7 +12,7 @@ using MediBook.Client.Core.Exceptions;
 
 namespace MediBook.Client.Android.Screens
 {
-    [Activity(Label = "MediBook", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "MediBook", Icon = "@drawable/icon")]
     public class LoginScreen : Activity
     {
 
@@ -40,23 +40,25 @@ namespace MediBook.Client.Android.Screens
             catch (AuthException e)
             {
                 this.ShowError(e.Message);
+                return;
             }
+            StartActivity(typeof(HomeScreen));
         }
 
         [Export]
         public async void Register(View view)
         {
             this.HideError();
-
             try
             {
                 await AccountComponent.Register(Username.Text, Password.Text);
-                this.Login(view);
             }
             catch (RegistrationException e)
             {
                 this.ShowError(e.ErrorMessage);
+                return;
             }
+            this.Login(view);
         }
 
         private void HideError()

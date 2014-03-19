@@ -82,32 +82,32 @@ namespace MediBook.Client.Android
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070008
-			public const int AppointmentList = 2131165192;
-			
-			// aapt resource value: 0x7f070000
-			public const int bodyText = 2131165184;
-			
-			// aapt resource value: 0x7f070005
-			public const int errorText = 2131165189;
+			// aapt resource value: 0x7f070001
+			public const int bodyText = 2131165185;
 			
 			// aapt resource value: 0x7f070006
-			public const int loginButton = 2131165190;
+			public const int errorText = 2131165190;
 			
-			// aapt resource value: 0x7f070004
-			public const int passwordInput = 2131165188;
-			
-			// aapt resource value: 0x7f070003
-			public const int passwordText = 2131165187;
+			// aapt resource value: 0x7f070000
+			public const int fragmentContainer = 2131165184;
 			
 			// aapt resource value: 0x7f070007
-			public const int registerButton = 2131165191;
+			public const int loginButton = 2131165191;
 			
-			// aapt resource value: 0x7f070001
-			public const int username = 2131165185;
+			// aapt resource value: 0x7f070005
+			public const int passwordInput = 2131165189;
+			
+			// aapt resource value: 0x7f070004
+			public const int passwordText = 2131165188;
+			
+			// aapt resource value: 0x7f070008
+			public const int registerButton = 2131165192;
 			
 			// aapt resource value: 0x7f070002
-			public const int usernameInput = 2131165186;
+			public const int username = 2131165186;
+			
+			// aapt resource value: 0x7f070003
+			public const int usernameInput = 2131165187;
 			
 			static Id()
 			{
@@ -123,10 +123,16 @@ namespace MediBook.Client.Android
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Login = 2130903040;
+			public const int AppointmentList = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int Main = 2130903041;
+			public const int Home = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int Login = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int NotificationList = 2130903043;
 			
 			static Layout()
 			{
