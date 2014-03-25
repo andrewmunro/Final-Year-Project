@@ -17,7 +17,7 @@ namespace MediBook.Server.Controllers
         // GET api/Appointment
         public IQueryable<AppointmentModel> GetAppointments()
         {
-            return this.User.IsInRole("Doctor") ? this.db.Appointments.Where(ap => ap.DoctorModel.UserName == this.User.Identity.Name) : this.db.Appointments.Where(ap => ap.Patient.UserName == this.User.Identity.Name);
+            return this.User.IsInRole("Doctor") ? this.db.Appointments.Where(ap => ap.Doctor.UserName == this.User.Identity.Name) : this.db.Appointments.Where(ap => ap.Patient.UserName == this.User.Identity.Name);
         }
 
         // GET api/Appointment/5

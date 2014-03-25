@@ -11,9 +11,9 @@ namespace MediBook.Shared.Models
         [Key]
         public Guid ID { get; set; }
 
-        public virtual AppointmentTypeModel TypeModel { get; set; }
+        public virtual AppointmentTypeModel Type { get; set; }
 
-        public virtual DoctorModel DoctorModel { get; set; }
+        public virtual DoctorModel Doctor { get; set; }
 
         public virtual PatientModel Patient { get; set; }
 

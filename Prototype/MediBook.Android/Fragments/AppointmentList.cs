@@ -1,24 +1,30 @@
 using System;
+using System.Collections.Generic;
 
 using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
+using MediBook.Client.Android.Fragments.Adapters;
 using MediBook.Client.Core.Components.Appointment;
 
 namespace MediBook.Client.Android.Fragments
 {
     public class AppointmentList : ListFragment
     {
+        private AppointmentComponent AppointmentComponent { get { return App.AppCore.GetComponent<AppointmentComponent>(); } }
+
         public override void OnActivityCreated(Bundle savedInstanceState)
         {
             base.OnActivityCreated(savedInstanceState);
+            this.RefreshItems();
+        }
 
-            App.AppCore.GetComponent<AppointmentComponent>();
-
-            var testItems = new string[] { "Vegetables", "Fruits", "Flower Buds", "Legumes", "Bulbs", "Tubers" };
-            this.ListAdapter = new ArrayAdapter<string>(Activity, global::Android.Resource.Layout.SimpleListItem1, testItems);
+        public async void RefreshItems()
+        {
+            var appointments = await AppointmentComponent.UpdateAppointments();
+            this.ListAdapter = new AppointmentListAdapter(Activity, appointments);
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -28,12 +34,8 @@ namespace MediBook.Client.Android.Fragments
 
         public override void OnListItemClick(ListView l, View v, int position, long id)
         {
-            ShowAppointment(position);
-        }
-
-        private void ShowAppointment(int appointmentID)
-        {
-            
+            var appointment = AppointmentComponent.Appointments[position];
+            Toast.MakeText(Activity, appointment.Type.Description, ToastLength.Short).Show();
         }
     }
 }

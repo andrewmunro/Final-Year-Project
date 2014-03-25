@@ -5,18 +5,18 @@ using MediBook.Shared.Models;
 namespace MediBook.Server.Migrations
 {
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MediBook.Server.Models.DataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Models.DataContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            //AutomaticMigrationsEnabled = true;
+            //AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(MediBook.Server.Models.DataContext context)
+        protected override void Seed(Models.DataContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -71,13 +71,13 @@ namespace MediBook.Server.Migrations
                 {
                     ID = new Guid(),
                     CreationTime = DateTime.Now,
-                    DoctorModel = context.Doctors.First(),
+                    Doctor = context.Doctors.First(),
                     Location = context.Locations.First(),
                     Patient = context.Patients.Find("Test1"),
                     Priority = PriorityGroup.P1,
                     RequiredAppointmentSlots = 2,
                     Status = AppointmentStatus.Unscheduled,
-                    TypeModel = context.AppointmentTypes.Find("SampleAppointment")
+                    Type = context.AppointmentTypes.Find("SampleAppointment")
                 });
 
             context.SaveChanges();

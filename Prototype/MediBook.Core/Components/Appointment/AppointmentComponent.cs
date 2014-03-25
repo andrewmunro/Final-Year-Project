@@ -10,7 +10,7 @@ namespace MediBook.Client.Core.Components.Appointment
 {
     public class AppointmentComponent : ComponentBase
     {
-        private UnitOfWork<AppointmentModel> AppointmentDatabase 
+/*        private UnitOfWork<AppointmentModel> AppointmentDatabase 
         { 
             get
             {
@@ -19,17 +19,11 @@ namespace MediBook.Client.Core.Components.Appointment
                            new UnitOfWork<AppointmentModel>(
                                this.Core.GetComponent<DatabaseComponent>().DatabaseConnection));
             }
-        }
+        }*/
 
-        public List<AppointmentModel> Appointments
-        {
-            get
-            {
-                return this.AppointmentDatabase.Repository.AsQueryable().ToList();
-            }
-        }
+        //private UnitOfWork<AppointmentModel> appointmentDatabase;
 
-        private UnitOfWork<AppointmentModel> appointmentDatabase;
+        public List<AppointmentModel> Appointments { get; set; }
 
         public AppointmentComponent(AppCore core) : base(core)
         {
@@ -40,10 +34,7 @@ namespace MediBook.Client.Core.Components.Appointment
             var request = new AuthGetAppointments(this.Core);
             var response = await request.Execute<List<AppointmentModel>>();
 
-            Appointments.RemoveRange(0, Appointments.Count);
-            Appointments.AddRange(Appointments.Union(response));
-            appointmentDatabase.Commit();
-            return Appointments;
+            return Appointments = response;
         }
     }
 }

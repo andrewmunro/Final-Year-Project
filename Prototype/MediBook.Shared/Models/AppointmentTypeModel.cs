@@ -16,7 +16,7 @@ namespace MediBook.Shared.Models
         public string Description { get; set; }
 
         [Display(Name = "List of doctors that can manage this type of appointment")]
-        public virtual ICollection<DoctorModel> AvailableDoctors { get; set; }
+        public virtual List<DoctorModel> AvailableDoctors { get; set; }
 
         [Display(Name = "Can patients setup this type of appointment?")]
         public bool CreatableByPatients { get; set; }

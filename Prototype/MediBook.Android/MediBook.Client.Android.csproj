@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fragments\Adapters\AppointmentListAdapter.cs" />
     <Compile Include="Fragments\AppointmentList.cs" />
     <Compile Include="Fragments\NotificationList.cs" />
     <Compile Include="Screens\HomeScreen.cs" />
@@ -83,6 +84,12 @@
     <AndroidResource Include="Resources\Layout\NotificationList.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\Layout\CustomList.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Drawable\Selector.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Layout\Home.axml" />
@@ -98,11 +105,16 @@
     <AndroidResource Include="Resources\Values\Dimensions.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\Values\Colors.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MediBook.Core\MediBook.Client.Core.csproj">
       <Project>{9fca2e3f-28ea-426e-b31f-e66526c593d5}</Project>
       <Name>MediBook.Client.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MediBook.Shared\MediBook.Shared.csproj">
+      <Project>{5f066379-ab0c-424e-9e44-8229240ef6f6}</Project>
+      <Name>MediBook.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
