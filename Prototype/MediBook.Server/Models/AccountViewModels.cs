@@ -5,7 +5,7 @@ namespace MediBook.Server.Models
 {
     // Models returned by AccountController actions.
 
-    public class ExternalLoginViewModel
+    public class ExternalLoginView
     {
         public string Name { get; set; }
 
@@ -14,18 +14,18 @@ namespace MediBook.Server.Models
         public string State { get; set; }
     }
 
-    public class ManageInfoViewModel
+    public class ManageInfoView
     {
         public string LocalLoginProvider { get; set; }
 
         public string UserName { get; set; }
 
-        public IEnumerable<UserLoginInfoViewModel> Logins { get; set; }
+        public IEnumerable<UserLoginInfoView> Logins { get; set; }
 
-        public IEnumerable<ExternalLoginViewModel> ExternalLoginProviders { get; set; }
+        public IEnumerable<ExternalLoginView> ExternalLoginProviders { get; set; }
     }
 
-    public class UserInfoViewModel
+    public class UserInfoView
     {
         public string UserName { get; set; }
 
@@ -34,7 +34,7 @@ namespace MediBook.Server.Models
         public string LoginProvider { get; set; }
     }
 
-    public class UserLoginInfoViewModel
+    public class UserLoginInfoView
     {
         public string LoginProvider { get; set; }
 

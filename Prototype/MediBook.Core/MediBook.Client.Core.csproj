@@ -43,6 +43,7 @@
     <Compile Include="Components\Account\Requests\Post\PostLoginAccount.cs" />
     <Compile Include="Components\Account\Requests\Post\PostRegisterAccount.cs" />
     <Compile Include="Components\Appointment\AppointmentComponent.cs" />
+    <Compile Include="Components\Appointment\Requests\AuthGetAppointments.cs" />
     <Compile Include="Components\ComponentBase.cs" />
     <Compile Include="Components\Database\DatabaseComponent.cs" />
     <Compile Include="Config\Configuration.cs" />
@@ -61,7 +62,6 @@
     <Compile Include="Components\Database\UnitOfWork.cs" />
     <Compile Include="AppCore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\Appointment\Models\Appointment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -74,7 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Components\Account\Requests\Get\" />
-    <Folder Include="Components\Appointment\Requests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

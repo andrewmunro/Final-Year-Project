@@ -7,7 +7,10 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
+
+using MediBook.Server.Exceptions;
+using MediBook.Shared.Models;
+
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -24,6 +27,7 @@ namespace MediBook.Server.Controllers
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
+        private DataContext db = new DataContext();
 
         public AccountController()
             : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat)
@@ -43,11 +47,11 @@ namespace MediBook.Server.Controllers
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
-        public UserInfoViewModel GetUserInfo()
+        public UserInfoView GetUserInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
-            return new UserInfoViewModel
+            return new UserInfoView
             {
                 UserName = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
@@ -65,7 +69,7 @@ namespace MediBook.Server.Controllers
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
         [Route("ManageInfo")]
-        public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
+        public async Task<ManageInfoView> GetManageInfo(string returnUrl, bool generateState = false)
         {
             IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
@@ -74,11 +78,11 @@ namespace MediBook.Server.Controllers
                 return null;
             }
 
-            List<UserLoginInfoViewModel> logins = new List<UserLoginInfoViewModel>();
+            List<UserLoginInfoView> logins = new List<UserLoginInfoView>();
 
             foreach (IdentityUserLogin linkedAccount in user.Logins)
             {
-                logins.Add(new UserLoginInfoViewModel
+                logins.Add(new UserLoginInfoView
                 {
                     LoginProvider = linkedAccount.LoginProvider,
                     ProviderKey = linkedAccount.ProviderKey
@@ -87,14 +91,14 @@ namespace MediBook.Server.Controllers
 
             if (user.PasswordHash != null)
             {
-                logins.Add(new UserLoginInfoViewModel
+                logins.Add(new UserLoginInfoView
                 {
                     LoginProvider = LocalLoginProvider,
                     ProviderKey = user.UserName,
                 });
             }
 
-            return new ManageInfoViewModel
+            return new ManageInfoView
             {
                 LocalLoginProvider = LocalLoginProvider,
                 UserName = user.UserName,
@@ -105,7 +109,7 @@ namespace MediBook.Server.Controllers
 
         // POST api/Account/ChangePassword
         [Route("ChangePassword")]
-        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBinding model)
         {
             if (!ModelState.IsValid)
             {
@@ -126,7 +130,7 @@ namespace MediBook.Server.Controllers
 
         // POST api/Account/SetPassword
         [Route("SetPassword")]
-        public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
+        public async Task<IHttpActionResult> SetPassword(SetPasswordBinding model)
         {
             if (!ModelState.IsValid)
             {
@@ -146,7 +150,7 @@ namespace MediBook.Server.Controllers
 
         // POST api/Account/AddExternalLogin
         [Route("AddExternalLogin")]
-        public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
+        public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBinding model)
         {
             if (!ModelState.IsValid)
             {
@@ -186,7 +190,7 @@ namespace MediBook.Server.Controllers
 
         // POST api/Account/RemoveLogin
         [Route("RemoveLogin")]
-        public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
+        public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBinding model)
         {
             if (!ModelState.IsValid)
             {
@@ -273,10 +277,10 @@ namespace MediBook.Server.Controllers
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
         [AllowAnonymous]
         [Route("ExternalLogins")]
-        public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
+        public IEnumerable<ExternalLoginView> GetExternalLogins(string returnUrl, bool generateState = false)
         {
             IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
-            List<ExternalLoginViewModel> logins = new List<ExternalLoginViewModel>();
+            List<ExternalLoginView> logins = new List<ExternalLoginView>();
 
             string state;
 
@@ -292,7 +296,7 @@ namespace MediBook.Server.Controllers
 
             foreach (AuthenticationDescription description in descriptions)
             {
-                ExternalLoginViewModel login = new ExternalLoginViewModel
+                ExternalLoginView login = new ExternalLoginView
                 {
                     Name = description.Caption,
                     Url = Url.Route("ExternalLogin", new
@@ -314,7 +318,7 @@ namespace MediBook.Server.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register(RegisterBinding model)
         {
             if (!ModelState.IsValid)
             {
@@ -327,6 +331,11 @@ namespace MediBook.Server.Controllers
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                if(model.AccountType == AccountType.Doctor) this.CreateDoctor(model);
+                else this.CreatePatient(model);
+            }
             IHttpActionResult errorResult = GetErrorResult(result);
 
             if (errorResult != null)
@@ -337,11 +346,41 @@ namespace MediBook.Server.Controllers
             return Ok();
         }
 
+        private void CreateDoctor(RegisterBinding model)
+        {
+            //If doctor already exists, throw exception.
+            if (db.Doctors.Count(e => e.UserName == model.UserName) > 0) throw new AccountAlreadyExistsException();
+
+            db.Doctors.Add(new DoctorModel()
+                               {
+                                   FirstName = model.FirstName,
+                                   LastName = model.LastName,
+                                   UserName = model.UserName
+                               });
+            db.SaveChanges();
+            UserManager.AddToRoleAsync(UserManager.FindByName(model.UserName).Id, "Doctor");
+        }
+
+        private void CreatePatient(RegisterBinding model)
+        {
+            //If doctor already exists, throw exception.
+            if (db.Patients.Count(e => e.UserName == model.UserName) > 0) throw new AccountAlreadyExistsException();
+
+            db.Patients.Add(new PatientModel()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                UserName = model.UserName
+            });
+            db.SaveChanges();
+            UserManager.AddToRoleAsync(UserManager.FindByName(model.UserName).Id, "Patient");
+        }
+
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]
-        public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
+        public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBinding model)
         {
             if (!ModelState.IsValid)
             {

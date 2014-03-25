@@ -12,7 +12,7 @@ using MediBook.Client.Core.Exceptions;
 
 namespace MediBook.Client.Android.Screens
 {
-    [Activity(Label = "MediBook", Icon = "@drawable/icon")]
+    [Activity(Label = "MediBook", MainLauncher = true, Icon = "@drawable/icon")]
     public class LoginScreen : Activity
     {
 

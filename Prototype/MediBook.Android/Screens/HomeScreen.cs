@@ -5,7 +5,7 @@ using MediBook.Client.Android.Fragments;
 
 namespace MediBook.Client.Android.Screens
 {
-    [Activity(Label = "MediBook", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "MediBook", Icon = "@drawable/icon")]
     public class HomeScreen : Activity
     {
         protected override void OnCreate(Bundle bundle)

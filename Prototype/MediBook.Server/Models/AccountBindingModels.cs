@@ -6,14 +6,14 @@ namespace MediBook.Server.Models
 {
     // Models used as parameters to AccountController actions.
 
-    public class AddExternalLoginBindingModel
+    public class AddExternalLoginBinding
     {
         [Required]
         [Display(Name = "External access token")]
         public string ExternalAccessToken { get; set; }
     }
 
-    public class ChangePasswordBindingModel
+    public class ChangePasswordBinding
     {
         [Required]
         [DataType(DataType.Password)]
@@ -32,7 +32,7 @@ namespace MediBook.Server.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class RegisterBindingModel
+    public class RegisterBinding
     {
         [Required]
         [Display(Name = "User name")]
@@ -48,16 +48,34 @@ namespace MediBook.Server.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Type of Account, either Doctor or Patient")]
+        public AccountType AccountType { get; set; }
+
+        [Required]
+        [Display(Name = "FirstName")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "LastName")]
+        public string LastName { get; set; }
     }
 
-    public class RegisterExternalBindingModel
+    public enum AccountType
+    {
+        Doctor,
+        Patient
+    }
+
+    public class RegisterExternalBinding
     {
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
     }
 
-    public class RemoveLoginBindingModel
+    public class RemoveLoginBinding
     {
         [Required]
         [Display(Name = "Login provider")]
@@ -68,7 +86,7 @@ namespace MediBook.Server.Models
         public string ProviderKey { get; set; }
     }
 
-    public class SetPasswordBindingModel
+    public class SetPasswordBinding
     {
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
