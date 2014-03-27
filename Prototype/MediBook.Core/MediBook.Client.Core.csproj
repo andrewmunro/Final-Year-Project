@@ -40,6 +40,7 @@
     <Compile Include="Components\Account\Models\RegistrationResponse.cs" />
     <Compile Include="Components\Account\Models\TokenResponse.cs" />
     <Compile Include="Components\Account\AccountComponent.cs" />
+    <Compile Include="Components\Account\Requests\Post\AuthPostDeviceID.cs" />
     <Compile Include="Components\Account\Requests\Post\PostLoginAccount.cs" />
     <Compile Include="Components\Account\Requests\Post\PostRegisterAccount.cs" />
     <Compile Include="Components\Appointment\AppointmentComponent.cs" />

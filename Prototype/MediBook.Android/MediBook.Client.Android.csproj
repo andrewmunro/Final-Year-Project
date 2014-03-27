@@ -50,6 +50,10 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GCM.Client, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\GCM.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
@@ -66,6 +70,7 @@
     <Compile Include="Fragments\Adapters\AppointmentListAdapter.cs" />
     <Compile Include="Fragments\AppointmentList.cs" />
     <Compile Include="Fragments\NotificationList.cs" />
+    <Compile Include="PushHandlerService.cs" />
     <Compile Include="Screens\HomeScreen.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,6 +103,7 @@
     <AndroidResource Include="Resources\Drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Libs\GCM.Client.dll" />
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\Values\Login.xml">
       <SubType>Designer</SubType>

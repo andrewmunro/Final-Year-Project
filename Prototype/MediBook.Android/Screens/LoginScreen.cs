@@ -5,6 +5,8 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
+using Gcm.Client;
+
 using Java.Interop;
 
 using MediBook.Client.Core.Components.Account;
@@ -22,10 +24,15 @@ namespace MediBook.Client.Android.Screens
         public EditText Password { get { return FindViewById<EditText>(Resource.Id.passwordInput); } }
         public TextView ErrorText { get { return FindViewById<TextView>(Resource.Id.errorText); } }
 
+        public string RegistrationID { get { return GcmClient.GetRegistrationId(this); } }
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Login);
+
+            GcmClient.CheckDevice(this);
+            GcmClient.CheckManifest(this);
         }
 
         [Export]
@@ -42,6 +49,13 @@ namespace MediBook.Client.Android.Screens
                 this.ShowError(e.Message);
                 return;
             }
+
+            if (String.IsNullOrEmpty(RegistrationID))
+            {
+                GcmClient.Register(this);
+                await AccountComponent.SendDeviceID(RegistrationID);
+            }
+
             StartActivity(typeof(HomeScreen));
         }
 

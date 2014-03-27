@@ -1,13 +1,9 @@
-﻿using System.Data.Entity;
-using System.Web.Mvc;
-
-using MediBook.Server.Models;
+﻿using MediBook.Server.Notification;
 
 using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartup(typeof(MediBook.Server.Startup))]
-
 namespace MediBook.Server
 {
     public partial class Startup
@@ -16,6 +12,7 @@ namespace MediBook.Server
         {
             ConfigureAuth(app);
             ConfigureRoles();
+            new NotificationService();
         }
     }
 }

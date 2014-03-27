@@ -50,6 +50,11 @@ namespace MediBook.Server.Controllers
             return CreatedAtRoute("DefaultApi", new { id = appointmentModel.ID }, appointmentModel);
         }
 
+        public void ScheduleAppointment()
+        {
+            
+        }
+
         // DELETE api/Appointment/5
         [ResponseType(typeof(AppointmentModel))]
         public IHttpActionResult DeleteAppointment(int id)

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="cellback">#FFDAFF7F</color>
-  <color name="white">#FFFFFF</color>
+  <color name="white">#FFFFFF</color> 
   <color name="yellow">#FFFF00</color>
   <color name="fuchsia">#FF00FF</color>
   <color name="red">#FF0000</color>

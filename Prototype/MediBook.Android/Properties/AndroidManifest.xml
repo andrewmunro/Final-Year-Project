@@ -3,4 +3,10 @@
 	<uses-sdk android:minSdkVersion="15" />
 	<application android:label="MediBook" android:icon="@drawable/Icon"></application>
 	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="medibook.permission.C2D_MESSAGE" />
+	<permission android:name="medibook.permission.C2D_MESSAGE" />
+                   
 </manifest>

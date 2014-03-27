@@ -62,6 +62,10 @@
       <Project>{9fca2e3f-28ea-426e-b31f-e66526c593d5}</Project>
       <Name>MediBook.Client.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MediBook.Shared\MediBook.Shared.csproj">
+      <Project>{5f066379-ab0c-424e-9e44-8229240ef6f6}</Project>
+      <Name>MediBook.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

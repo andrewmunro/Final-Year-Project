@@ -38,5 +38,11 @@ namespace MediBook.Client.Core.Components.Account
 
             return this.Token = response;
         }
+
+        public async Task SendDeviceID(string registrationID)
+        {
+            var request = new AuthPostDeviceID(Core, registrationID);
+            var response = await request.Execute();
+        }
     }
 }

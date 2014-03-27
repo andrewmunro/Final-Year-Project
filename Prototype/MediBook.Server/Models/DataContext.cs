@@ -13,6 +13,7 @@ namespace MediBook.Server.Models
         public DbSet<DoctorModel> Doctors { get; set; }
         public DbSet<PatientModel> Patients { get; set; }
         public DbSet<LocationModel> Locations { get; set; }
+        public DbSet<NotificationModel> Notifications { get; set; }
 
         public DataContext()
         {

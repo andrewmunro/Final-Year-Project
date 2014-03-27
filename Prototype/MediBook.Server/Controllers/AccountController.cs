@@ -59,6 +59,14 @@ namespace MediBook.Server.Controllers
             };
         }
 
+        [Route("DeviceID")]
+        public IHttpActionResult SetDeviceID(string deviceID)
+        {
+            db.Patients.Find(User.Identity.Name).DeviceID = deviceID;
+            db.SaveChanges();
+            return Ok();
+        }
+
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
