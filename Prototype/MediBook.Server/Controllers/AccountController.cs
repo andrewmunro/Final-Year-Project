@@ -59,6 +59,7 @@ namespace MediBook.Server.Controllers
             };
         }
 
+        // POST api/Account/DeviceID
         [Route("DeviceID")]
         public IHttpActionResult SetDeviceID(string deviceID)
         {

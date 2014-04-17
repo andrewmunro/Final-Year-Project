@@ -50,10 +50,6 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GCM.Client, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\GCM.Client.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
@@ -103,8 +99,9 @@
     <AndroidResource Include="Resources\Drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Libs\GCM.Client.dll" />
-    <Content Include="Properties\AndroidManifest.xml" />
+    <Content Include="Properties\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <AndroidResource Include="Resources\Values\Login.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -114,6 +111,10 @@
     <AndroidResource Include="Resources\Values\Colors.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GCM.Client\GCM.Client.csproj">
+      <Project>{ce239f1e-0441-40d7-9102-dbaa1af27e93}</Project>
+      <Name>GCM.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MediBook.Core\MediBook.Client.Core.csproj">
       <Project>{9fca2e3f-28ea-426e-b31f-e66526c593d5}</Project>
       <Name>MediBook.Client.Core</Name>

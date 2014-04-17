@@ -3,8 +3,6 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MediBook.Server.Models;
-using MediBook.Server.Models.Enums;
-using MediBook.Shared.Constants.Appointment;
 using MediBook.Shared.Models;
 
 namespace MediBook.Server.Controllers
@@ -20,11 +18,11 @@ namespace MediBook.Server.Controllers
             return this.User.IsInRole("Doctor") ? this.db.Appointments.Where(ap => ap.Doctor.UserName == this.User.Identity.Name) : this.db.Appointments.Where(ap => ap.Patient.UserName == this.User.Identity.Name);
         }
 
-        // GET api/Appointment/5
+        // GET api/Appointment/{appointment_guid}
         [ResponseType(typeof(AppointmentModel))]
-        public IHttpActionResult GetAppointment(int id)
+        public IHttpActionResult GetAppointment(Guid id)
         {
-            AppointmentModel appointmentModel = db.Appointments.Find(id);
+            AppointmentModel appointmentModel = FindAppointmentForUser(id);
             if (appointmentModel == null)
             {
                 return NotFound();
@@ -50,14 +48,16 @@ namespace MediBook.Server.Controllers
             return CreatedAtRoute("DefaultApi", new { id = appointmentModel.ID }, appointmentModel);
         }
 
-        public void ScheduleAppointment()
+        [ResponseType(typeof(AppointmentModel))]
+        public IHttpActionResult ScheduleAppointment(Guid id, DateTime startRange, DateTime endRange)
         {
-            
+            var appointment = this.FindAppointmentForUser(id);
+
         }
 
         // DELETE api/Appointment/5
         [ResponseType(typeof(AppointmentModel))]
-        public IHttpActionResult DeleteAppointment(int id)
+        public IHttpActionResult DeleteAppointment(Guid id)
         {
             AppointmentModel appointmentModel = db.Appointments.Find(id);
             if (appointmentModel == null)
@@ -78,6 +78,11 @@ namespace MediBook.Server.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private AppointmentModel FindAppointmentForUser(Guid id)
+        {
+            return this.GetAppointments().SingleOrDefault(aps => aps.ID == id);
         }
 
         private bool AppointmentExists(Guid id)

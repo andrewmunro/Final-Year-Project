@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using MediBook.Server.Models.Enums;
-using MediBook.Shared.Constants.Appointment;
+using MediBook.Shared.Models.Enums;
 
 namespace MediBook.Shared.Models
 {
@@ -24,6 +24,8 @@ namespace MediBook.Shared.Models
         public int RequiredAppointmentSlots { get; set; }
 
         public DateTime CreationTime { get; set; }
+
+        public DateTime ScheduledTime { get; set; }
 
         public PriorityGroup Priority { get; set; }
     }

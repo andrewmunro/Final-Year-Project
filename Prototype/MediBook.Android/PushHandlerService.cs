@@ -5,6 +5,7 @@ using Android.Content;
 using Android.Util;
 
 using Gcm.Client;
+
 using MediBook.Client.Android.Screens;
 
 namespace MediBook.Client.Android
