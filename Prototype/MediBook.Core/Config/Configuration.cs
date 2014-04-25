@@ -3,7 +3,7 @@
     public static class Configuration
     {
 
-        public const string ServerUrl = "http://medibook.azurewebsites.net";
+        public const string ServerUrl = "http://medibook.azurewebsites.net/";
         public const string DBName = "MediBookDB.db3";
     }
 }

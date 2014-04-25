@@ -12,8 +12,9 @@ namespace MediBook.Server
 
         public static List<DateTime> GetSchedulingOptions(AppointmentModel appointment)
         {
+            //TODO Implement
             var appointmentLength = appointment.RequiredAppointmentSlots * appointment.Type.TimeSlot;
-            
+            return new List<DateTime>();
         }
     }
 }

@@ -3,11 +3,13 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MediBook.Server.Models;
+using MediBook.Server.Notification;
 using MediBook.Shared.Models;
 
 namespace MediBook.Server.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/Appointment")]
     public class AppointmentController : ApiController
     {
         private DataContext db = new DataContext();
@@ -40,7 +42,7 @@ namespace MediBook.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            appointmentModel.ID = new Guid();
+            appointmentModel.ID = Guid.NewGuid();
 
             db.Appointments.Add(appointmentModel);
             db.SaveChanges();
@@ -48,11 +50,22 @@ namespace MediBook.Server.Controllers
             return CreatedAtRoute("DefaultApi", new { id = appointmentModel.ID }, appointmentModel);
         }
 
+        [Route("TestNote")]
+        public IHttpActionResult ScheduleTestNotification()
+        {
+            var appointment = db.Appointments.First();
+            NotificationService.Instance.AddNotification(appointment.ID, "Test notification", "test notification", DateTime.Now.AddSeconds(10));
+            return this.Ok();
+        }
+
         [ResponseType(typeof(AppointmentModel))]
         public IHttpActionResult ScheduleAppointment(Guid id, DateTime startRange, DateTime endRange)
         {
             var appointment = this.FindAppointmentForUser(id);
-
+            //TODO correct scheduling
+            appointment.ScheduledTime = startRange;
+            db.SaveChanges();
+            return this.Ok(appointment);
         }
 
         // DELETE api/Appointment/5

@@ -6,7 +6,7 @@ using System.Text;
 
 using MediBook.Shared.Models;
 
-namespace MediBook.Server.Notification
+namespace MediBook.Testing
 {
     public class PushNotification
     {
@@ -17,21 +17,21 @@ namespace MediBook.Server.Notification
 
         private HttpWebRequest Request { get; set; }
 
-        public PushNotification(NotificationModel notification)
+        public PushNotification(string title, string body, List<string> senderIDs)
         {
-            Request = (HttpWebRequest)WebRequest.Create(GcmUrl);
-            Request.Method = RequestMethod;
-            Request.KeepAlive = false;
-            string postData = "{ \"registration_ids\": [ \"" + String.Join(",", notification.Appointment.Patient.GcmRegistrationId) + "\" ], \"data\": {\"title\": \"" + notification.Title + "\", \"body\": \"" + notification.Body + "\"}}";
+            this.Request = (HttpWebRequest)WebRequest.Create(GcmUrl);
+            this.Request.Method = RequestMethod;
+            this.Request.KeepAlive = false;
+            string postData = "{ \"registration_ids\": [ \"" + String.Join(",", senderIDs.ToArray()) + "\" ], \"data\": {\"title\": \"" + title + "\", \"body\": \"" + body + "\"}}";
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-            Request.ContentType = RequestContentType;
-            Request.Headers.Add(HttpRequestHeader.Authorization, String.Format("key={0}", ApiKey));
+            this.Request.ContentType = RequestContentType;
+            this.Request.Headers.Add(HttpRequestHeader.Authorization, String.Format("key={0}", ApiKey));
 
-            var dataStream = Request.GetRequestStream();
+            var dataStream = this.Request.GetRequestStream();
             dataStream.Write(byteArray, 0, byteArray.Length);
             dataStream.Close();
 
-            var response = Request.GetResponse();
+            var response = this.Request.GetResponse();
             var responseCode = ((HttpWebResponse)response).StatusCode;
             if (responseCode.Equals(HttpStatusCode.Unauthorized) || responseCode.Equals(HttpStatusCode.Forbidden))
             {

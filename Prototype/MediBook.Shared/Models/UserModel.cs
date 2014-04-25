@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MediBook.Shared.Models
 {
@@ -10,5 +12,7 @@ namespace MediBook.Shared.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public string GcmRegistrationId { get; set; }
     }
 }

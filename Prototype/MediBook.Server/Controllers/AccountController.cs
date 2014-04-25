@@ -60,10 +60,12 @@ namespace MediBook.Server.Controllers
         }
 
         // POST api/Account/DeviceID
+        [Authorize]
         [Route("DeviceID")]
         public IHttpActionResult SetDeviceID(string deviceID)
         {
-            db.Patients.Find(User.Identity.Name).DeviceID = deviceID;
+            var patient = db.Patients.Find(User.Identity.Name);
+            patient.GcmRegistrationId = deviceID;
             db.SaveChanges();
             return Ok();
         }
@@ -379,7 +381,8 @@ namespace MediBook.Server.Controllers
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                UserName = model.UserName
+                UserName = model.UserName,
+                GcmRegistrationId = ""
             });
             db.SaveChanges();
             UserManager.AddToRoleAsync(UserManager.FindByName(model.UserName).Id, "Patient");

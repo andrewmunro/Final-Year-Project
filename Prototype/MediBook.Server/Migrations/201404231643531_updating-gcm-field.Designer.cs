@@ -7,13 +7,13 @@ namespace MediBook.Server.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class InitialMigration : IMigrationMetadata
+    public sealed partial class updatinggcmfield : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updatinggcmfield));
         
         string IMigrationMetadata.Id
         {
-            get { return "201403251240132_InitialMigration"; }
+            get { return "201404231643531_updating-gcm-field"; }
         }
         
         string IMigrationMetadata.Source

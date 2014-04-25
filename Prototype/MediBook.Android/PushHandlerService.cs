@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text;
 
 using Android.App;
@@ -7,6 +8,7 @@ using Android.Util;
 using Gcm.Client;
 
 using MediBook.Client.Android.Screens;
+using MediBook.Client.Core.Components.Account;
 
 namespace MediBook.Client.Android
 {
@@ -14,6 +16,7 @@ namespace MediBook.Client.Android
     [IntentFilter(new string[] { Constants.INTENT_FROM_GCM_MESSAGE }, Categories = new string[] { "medibook" })]
     [IntentFilter(new string[] { Constants.INTENT_FROM_GCM_REGISTRATION_CALLBACK }, Categories = new string[] { "medibook" })]
     [IntentFilter(new string[] { Constants.INTENT_FROM_GCM_LIBRARY_RETRY }, Categories = new string[] { "medibook" })]
+
     public class GcmBroadcastReceiver : GcmBroadcastReceiverBase<PushHandlerService>
     {
         public static string[] SENDER_IDS = new string[] { "223145784936" };
@@ -27,6 +30,8 @@ namespace MediBook.Client.Android
         public PushHandlerService() : base(GcmBroadcastReceiver.SENDER_IDS) { }
 
         private const string TAG = "medi-book";
+
+        public AccountComponent AccountComponent { get { return App.AppCore.GetComponent<AccountComponent>(); } }
 
         protected override void OnMessage(Context context, Intent intent)
         {
@@ -55,6 +60,7 @@ namespace MediBook.Client.Android
         protected override void OnRegistered(Context context, string registrationId)
         {
             Log.Verbose(TAG, "GCM Registered: " + registrationId);
+            AccountComponent.SendDeviceID(registrationId);
         }
 
         protected override void OnUnRegistered(Context context, string registrationId)

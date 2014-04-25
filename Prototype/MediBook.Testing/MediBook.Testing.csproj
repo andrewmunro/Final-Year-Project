@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="AccountComponentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PushNotification.cs" />
+    <Compile Include="PushNotificationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MediBook.Core\MediBook.Client.Core.csproj">

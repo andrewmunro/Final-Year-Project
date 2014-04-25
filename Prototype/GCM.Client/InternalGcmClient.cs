@@ -48,13 +48,13 @@ namespace Gcm.Client
 		{
 			var packageManager = context.PackageManager;
 			var packageName = context.PackageName;
-			var permissionName = packageName + ".permission.C2D_MESSAGE";
+			var permissionName = "medibook.permission.C2D_MESSAGE";
 
 			if (string.IsNullOrEmpty (packageName))
 				throw new NotSupportedException ("Your Android app must have a package name!");
 
-			if (char.IsUpper (packageName [0]))
-				throw new NotSupportedException ("Your Android app package name MUST start with a lowercase character.  Current Package Name: " + packageName);
+			//if (char.IsUpper (packageName [0]))
+			//	throw new NotSupportedException ("Your Android app package name MUST start with a lowercase character.  Current Package Name: " + packageName);
 
 			try
 			{

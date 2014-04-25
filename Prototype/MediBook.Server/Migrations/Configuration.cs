@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using MediBook.Server.Models.Enums;
 using MediBook.Shared.Models;
 using MediBook.Shared.Models.Enums;
@@ -30,55 +32,69 @@ namespace MediBook.Server.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            context.Locations.Add(
-                new LocationModel()
-                {
-                    Name = "TestHospital",
-                    GoogleMapsUri =
-                        "https://maps.google.co.uk/maps?q=Nuffield+Health+Leeds+Hospital&hl=en&ll=53.801867,-1.548042&spn=0.022532,0.066047&sll=53.801867,-1.548042&sspn=0.022532,0.066047&hq=Nuffield+Health+Leeds+Hospital&t=m&z=15"
-                });
+             context.Locations.AddOrUpdate(
+                 new LocationModel()
+                 {
+                     Name = "TestHospital",
+                     GoogleMapsUri =
+                         "https://maps.google.co.uk/maps?q=Nuffield+Health+Leeds+Hospital&hl=en&ll=53.801867,-1.548042&spn=0.022532,0.066047&sll=53.801867,-1.548042&sspn=0.022532,0.066047&hq=Nuffield+Health+Leeds+Hospital&t=m&z=15"
+                 });
+
+             context.Doctors.AddOrUpdate(new DoctorModel() { UserName = "TestDoctor", FirstName = "Test", LastName = "Doctor", DoctorType = "Primary Care Doctor", ImageURL = "http://www.colourbox.com/preview/4315067-946968-portrait-american-doctor-on-hospital-ward.jpg" });
+
+             context.SaveChanges();
+
+             context.AppointmentTypes.AddOrUpdate(
+                 new AppointmentTypeModel()
+                 {
+                     Type = "SampleAppointment",
+                     AvailableDoctors = context.Doctors.ToList(),
+                     CreatableByPatients = true,
+                     Description =
+                         "A sample appointment type. An appointment of this type lasts 30 minutes and can be performed by all doctors. It can be created by patients.",
+                     TimeSlot = 30
+                 });
+
+             context.SaveChanges();
+
+             context.Patients.AddOrUpdate(new PatientModel()
+             {
+                 FirstName = "Andrew",
+                 LastName = "Munro",
+                 UserName = "Test1",
+                 GcmRegistrationId = ""
+             });
+
+             context.SaveChanges();
+             
+
+            var appointment = new AppointmentModel()
+                                  {
+                                      ID = Guid.NewGuid(),
+                                      CreationTime = DateTime.Now,
+                                      ScheduledTime = null,
+                                      Doctor = context.Doctors.First(),
+                                      Location = context.Locations.First(),
+                                      Patient = context.Patients.Find("Test1"),
+                                      Priority = PriorityGroup.P1,
+                                      RequiredAppointmentSlots = 2,
+                                      Status = AppointmentStatus.Unscheduled,
+                                      Type = context.AppointmentTypes.Find("SampleAppointment")
+                                  };
+
+            context.Appointments.AddOrUpdate(appointment);
 
             context.SaveChanges();
 
-            context.Doctors.Add(new DoctorModel() { UserName = "TestDoctor", FirstName = "Test", LastName = "Doctor" });
-
-            context.SaveChanges();
-
-            context.AppointmentTypes.Add(
-                new AppointmentTypeModel()
-                {
-                    Type = "SampleAppointment",
-                    AvailableDoctors = context.Doctors.ToList(),
-                    CreatableByPatients = true,
-                    Description =
-                        "A sample appointment type. An appointment of this type lasts 30 minutes and can be performed by all doctors. It can be created by patients.",
-                    TimeSlot = 30
-                });
-
-            context.SaveChanges();
-
-            context.Patients.Add(new PatientModel()
-            {
-                FirstName = "Andrew",
-                LastName = "Munro",
-                UserName = "Test1"
-            });
-
-            context.SaveChanges();
-
-            context.Appointments.Add(
-                new AppointmentModel()
-                {
-                    ID = new Guid(),
-                    CreationTime = DateTime.Now,
-                    Doctor = context.Doctors.First(),
-                    Location = context.Locations.First(),
-                    Patient = context.Patients.Find("Test1"),
-                    Priority = PriorityGroup.P1,
-                    RequiredAppointmentSlots = 2,
-                    Status = AppointmentStatus.Unscheduled,
-                    Type = context.AppointmentTypes.Find("SampleAppointment")
-                });
+            context.Notifications.AddOrUpdate(
+                new NotificationModel()
+                    {
+                        ID = Guid.NewGuid(),
+                        Appointment = appointment,
+                        Title = "Test Notification!",
+                        Body = "Test notification, lorel ipsum etc.",
+                        DueTime = DateTime.Now.AddMinutes(5)
+                    });
 
             context.SaveChanges();
         }

@@ -25,7 +25,7 @@ namespace MediBook.Shared.Models
 
         public DateTime CreationTime { get; set; }
 
-        public DateTime ScheduledTime { get; set; }
+        public DateTime? ScheduledTime { get; set; }
 
         public PriorityGroup Priority { get; set; }
     }

@@ -17,12 +17,28 @@ namespace MediBook.Server.Models
 
         public DataContext()
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<DbContext>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<DataContext>());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<PatientModel>().Map(x =>
+            {
+                x.MapInheritedProperties();
+                x.ToTable("PatientModels");
+            });
+
+            modelBuilder.Entity<DoctorModel>().Map(x =>
+            {
+                x.MapInheritedProperties();
+                x.ToTable("DoctorModels");
+            });
+
+            modelBuilder.Entity<AppointmentModel>().Property(p => p.ScheduledTime).HasColumnType("datetime2");
+            modelBuilder.Entity<AppointmentModel>().Property(p => p.CreationTime).HasColumnType("datetime2");
+            modelBuilder.Entity<NotificationModel>().Property(p => p.DueTime).HasColumnType("datetime2");
 
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id).ToTable("AspNetRoles");
 

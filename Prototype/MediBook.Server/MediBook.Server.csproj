@@ -204,9 +204,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201403251240132_InitialMigration.cs" />
-    <Compile Include="Migrations\201403251240132_InitialMigration.Designer.cs">
-      <DependentUpon>201403251240132_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201404231542549_initial-migration.cs" />
+    <Compile Include="Migrations\201404231542549_initial-migration.Designer.cs">
+      <DependentUpon>201404231542549_initial-migration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404231643531_updating-gcm-field.cs" />
+    <Compile Include="Migrations\201404231643531_updating-gcm-field.Designer.cs">
+      <DependentUpon>201404231643531_updating-gcm-field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404241802124_adding_doctor_fields.cs" />
+    <Compile Include="Migrations\201404241802124_adding_doctor_fields.Designer.cs">
+      <DependentUpon>201404241802124_adding_doctor_fields.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -288,8 +296,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201403251240132_InitialMigration.resx">
-      <DependentUpon>201403251240132_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404231542549_initial-migration.resx">
+      <DependentUpon>201404231542549_initial-migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404231643531_updating-gcm-field.resx">
+      <DependentUpon>201404231643531_updating-gcm-field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404241802124_adding_doctor_fields.resx">
+      <DependentUpon>201404241802124_adding_doctor_fields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

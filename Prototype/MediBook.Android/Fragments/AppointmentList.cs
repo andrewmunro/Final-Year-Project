@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
 using MediBook.Client.Android.Fragments.Adapters;
+using MediBook.Client.Android.Screens;
 using MediBook.Client.Core.Components.Appointment;
 
 namespace MediBook.Client.Android.Fragments
@@ -35,7 +37,9 @@ namespace MediBook.Client.Android.Fragments
         public override void OnListItemClick(ListView l, View v, int position, long id)
         {
             var appointment = AppointmentComponent.Appointments[position];
-            Toast.MakeText(Activity, appointment.Type.Description, ToastLength.Short).Show();
+            AppointmentComponent.ActiveAppointment = appointment;
+
+            StartActivity(new Intent (Activity, typeof(AppointmentScreen)));
         }
     }
 }

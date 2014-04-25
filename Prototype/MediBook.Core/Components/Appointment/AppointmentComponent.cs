@@ -25,6 +25,8 @@ namespace MediBook.Client.Core.Components.Appointment
 
         public List<AppointmentModel> Appointments { get; set; }
 
+        public AppointmentModel ActiveAppointment { get; set; }
+
         public AppointmentComponent(AppCore core) : base(core)
         {
         }
