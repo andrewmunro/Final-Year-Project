@@ -101,7 +101,7 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\Layout\CustomList.axml">
-      <SubType>AndroidResource</SubType>
+      <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\Drawable\button_selector.xml">
       <SubType>AndroidResource</SubType>
@@ -135,11 +135,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\Values\Colors.xml" />
-    <AndroidResource Include="Resources\Drawable\Medibook_Icon_72x72.png" />
     <AndroidResource Include="Resources\Drawable\appointment_selector.xml" />
     <AndroidResource Include="Resources\Drawable\date_time_picker_dialog.xml" />
     <AndroidResource Include="Resources\Menu\home_screen_menu.xml" />
     <AndroidResource Include="Resources\Menu\appointment_screen_menu.xml" />
+    <AndroidResource Include="Resources\Drawable\action_progressbar.xml" />
+    <AndroidResource Include="Resources\Drawable\ic_action_refresh.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GCM.Client\GCM.Client.csproj">

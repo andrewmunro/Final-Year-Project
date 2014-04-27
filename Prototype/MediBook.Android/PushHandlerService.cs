@@ -79,7 +79,7 @@ namespace MediBook.Client.Android
             var uiIntent = new Intent(this, typeof(HomeScreen));
 
             //Create the notification
-            var notification = new Notification(Resource.Drawable.Medibook_Icon_72x72, title) { Flags = NotificationFlags.AutoCancel };
+            var notification = new Notification(Resource.Drawable.Icon, title) { Flags = NotificationFlags.AutoCancel };
 
             //Auto cancel will remove the notification once the user touches it
 

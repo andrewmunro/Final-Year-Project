@@ -32,6 +32,6 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:padding="5dp"
-        android:src="@drawable/Medibook_Icon_72x72"
+        android:src="@drawable/Icon"
         android:layout_alignParentRight="true" />
 </RelativeLayout>

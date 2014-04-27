@@ -216,6 +216,10 @@
     <Compile Include="Migrations\201404241802124_adding_doctor_fields.Designer.cs">
       <DependentUpon>201404241802124_adding_doctor_fields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404271145547_location_changes.cs" />
+    <Compile Include="Migrations\201404271145547_location_changes.Designer.cs">
+      <DependentUpon>201404271145547_location_changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -305,6 +309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404241802124_adding_doctor_fields.resx">
       <DependentUpon>201404241802124_adding_doctor_fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404271145547_location_changes.resx">
+      <DependentUpon>201404271145547_location_changes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

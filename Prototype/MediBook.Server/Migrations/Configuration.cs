@@ -35,8 +35,8 @@ namespace MediBook.Server.Migrations
                  new LocationModel()
                  {
                      Name = "TestHospital",
-                     GoogleMapsUri =
-                         "https://maps.google.co.uk/maps?q=Nuffield+Health+Leeds+Hospital&hl=en&ll=53.801867,-1.548042&spn=0.022532,0.066047&sll=53.801867,-1.548042&sspn=0.022532,0.066047&hq=Nuffield+Health+Leeds+Hospital&t=m&z=15"
+                     Latititude = 53.8010068,
+                     Longititude = -1.553798
                  });
 
              context.Doctors.AddOrUpdate(new DoctorModel() { UserName = "TestDoctor", FirstName = "Test", LastName = "Doctor", DoctorType = "Primary Care Doctor", ImageURL = "http://www.colourbox.com/preview/4315067-946968-portrait-american-doctor-on-hospital-ward.jpg" });

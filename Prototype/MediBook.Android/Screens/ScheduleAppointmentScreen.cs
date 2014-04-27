@@ -70,7 +70,6 @@ namespace MediBook.Client.Android.Screens
             switch (item.ItemId)
             {
                 case global::Android.Resource.Id.Home:
-                    // app icon in action bar clicked; goto parent activity.
                     this.Finish();
                     return true;
                 default:

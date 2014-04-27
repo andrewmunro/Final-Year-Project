@@ -18,16 +18,28 @@ namespace MediBook.Client.Android.Fragments
     {
         private AppointmentComponent AppointmentComponent { get { return AppCore.Instance.GetComponent<AppointmentComponent>(); } }
 
-        public override void OnActivityCreated(Bundle savedInstanceState)
+        public async void RefreshItems(IMenuItem refreshMenuItem)
         {
-            base.OnActivityCreated(savedInstanceState);
-            this.RefreshItems();
-        }
-
-        public async void RefreshItems()
-        {
+            ToggleSpinner(true, refreshMenuItem);
             var appointments = await AppointmentComponent.UpdateAppointments();
             this.ListAdapter = new AppointmentListAdapter(Activity, appointments);
+            ToggleSpinner(false, refreshMenuItem);
+        }
+
+        public void ToggleSpinner(bool refreshing, IMenuItem refreshMenuItem)
+        {
+            if (refreshing)
+            {
+                refreshMenuItem.SetActionView(Resource.Drawable.action_progressbar);
+
+                refreshMenuItem.ExpandActionView();
+            }
+            else
+            {
+                refreshMenuItem.CollapseActionView();
+                // remove the progress bar view
+                refreshMenuItem.SetActionView(null);
+            }
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

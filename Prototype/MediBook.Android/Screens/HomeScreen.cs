@@ -1,6 +1,8 @@
 ﻿using Android.App;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 
 using MediBook.Client.Android.Fragments;
 using MediBook.Client.Core;
@@ -15,6 +17,11 @@ namespace MediBook.Client.Android.Screens
     {
         public AccountComponent AccountComponent { get { return AppCore.Instance.GetComponent<AccountComponent>(); } }
 
+        public AppointmentList AppointmentList { get; set; }
+        public NotificationList NotificationList { get; set; }
+
+        private IMenuItem RefreshMenuItem { get; set; }
+
         protected override void OnCreate(Bundle bundle)
         {
             this.SetTheme(Resource.Style.Theme_AppCompat);
@@ -23,8 +30,11 @@ namespace MediBook.Client.Android.Screens
 
             this.ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
 
-            AddTab("Appointments", Resource.Drawable.Icon, new AppointmentList());
-            AddTab("Notifications", Resource.Drawable.Icon, new NotificationList());
+            AppointmentList = new AppointmentList();
+            NotificationList = new NotificationList();
+
+            AddTab("Appointments", Resource.Drawable.Icon, AppointmentList);
+            AddTab("Notifications", Resource.Drawable.Icon, NotificationList);
 
             if (bundle != null)
                 this.ActionBar.SelectTab(this.ActionBar.GetTabAt(bundle.GetInt("AppointmentList")));
@@ -33,6 +43,10 @@ namespace MediBook.Client.Android.Screens
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.home_screen_menu, menu);
+
+            RefreshMenuItem = menu.FindItem(Resource.Id.refresh_button);
+
+            AppointmentList.RefreshItems(RefreshMenuItem);
 
             return base.OnCreateOptionsMenu(menu);
         }
@@ -44,6 +58,9 @@ namespace MediBook.Client.Android.Screens
                 case Resource.Id.logout_button:
                     AccountComponent.Logout();
                     this.Finish();
+                    return true;
+                case Resource.Id.refresh_button:
+                    AppointmentList.RefreshItems(RefreshMenuItem);
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);
