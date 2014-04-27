@@ -1593,7 +1593,7 @@ namespace MediBook.Client.Android
 			public const int activity_chooser_view_content = 2131165224;
 			
 			// aapt resource value: 0x7f070055
-			public const int addToCalanderButton = 2131165269;
+			public const int addToCalendarButton = 2131165269;
 			
 			// aapt resource value: 0x7f07000b
 			public const int always = 2131165195;

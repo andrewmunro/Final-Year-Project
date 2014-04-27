@@ -10,7 +10,6 @@ using Android.Views;
 using Android.Widget;
 
 using Java.Interop;
-
 using MediBook.Client.Core;
 using MediBook.Client.Core.Components.Appointment;
 using MediBook.Shared.Enums;
@@ -25,15 +24,50 @@ namespace MediBook.Client.Android.Screens
         private AppointmentModel Appointment { get { return AppCore.Instance.GetComponent<AppointmentComponent>().ActiveAppointment; } }
 
         private int appointmentDuration { get { return Appointment.RequiredAppointmentSlots * Appointment.Type.TimeSlot; } }
-        
-        public bool AddedToCalander
+
+        private long EventId { get { return BitConverter.ToInt64(Appointment.ID.ToByteArray(), 0); } }
+
+        public global::Android.Net.Uri EventUri { get { return ContentUris.WithAppendedId(CalendarContract.Events.ContentUri, EventId); } }
+
+        public bool AddedToCalendar
         {
             get
             {
-                var eventUri = ContentUris.WithAppendedId(CalendarContract.Events.ContentUri, BitConverter.ToInt64(this.Appointment.ID.ToByteArray(), 0));
-                var cursor = ManagedQuery(eventUri, null, null, null, null);
+                var cursor = ContentResolver.Query(EventUri, new[] { "_id", "deleted" }, "calendar_id=" + CalendarId, null, null);
 
-                return cursor.Count > 0;
+                var addedToCalendar = false;
+
+                while (cursor.MoveToNext())
+                {
+                    long eventId = cursor.GetLong(cursor.GetColumnIndex("_id"));
+                    int deleted = cursor.GetInt(cursor.GetColumnIndex("deleted"));
+                    if (eventId == EventId)
+                    {
+                        if (deleted == 0) addedToCalendar = true;
+                    }
+                }
+                cursor.Close();
+                return addedToCalendar;
+            }
+        }
+
+        private int CalendarId
+        {
+            get
+            {
+                var calendarsUri = CalendarContract.Calendars.ContentUri;
+
+                string[] calendarsProjection =
+                    {
+                        CalendarContract.Calendars.InterfaceConsts.Id,
+                        CalendarContract.Calendars.InterfaceConsts.CalendarDisplayName,
+                        CalendarContract.Calendars.InterfaceConsts.AccountName
+                    };
+
+                var cursor = ManagedQuery(calendarsUri, calendarsProjection, null, null, null);
+
+                cursor.MoveToFirst();
+                return cursor.GetInt(0);
             }
         }
 
@@ -49,7 +83,7 @@ namespace MediBook.Client.Android.Screens
 
         public Button ScheduleButton { get { return FindViewById<Button>(Resource.Id.scheduleButton); } }
         public Button CancelButton { get { return FindViewById<Button>(Resource.Id.cancelButton); } }
-        public Button CalanderButton { get { return FindViewById<Button>(Resource.Id.addToCalanderButton); } }
+        public Button CalendarButton { get { return FindViewById<Button>(Resource.Id.addToCalendarButton); } }
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -57,7 +91,7 @@ namespace MediBook.Client.Android.Screens
 
             this.SetTheme(Resource.Style.Theme_AppCompat);
             SetContentView(Resource.Layout.AppointmentScreen);
-            
+
             ActionBar.SetDisplayHomeAsUpEnabled(true);
 
             this.Title = Appointment.Type.Type;
@@ -80,7 +114,7 @@ namespace MediBook.Client.Android.Screens
                 AppointmentTime.Text = Appointment.ScheduledTime.Value.ToFormattedString();
             }
 
-            SetButtonState(CalanderButton, false);
+            SetButtonState(this.CalendarButton, false);
 
             switch (Appointment.Status)
             {
@@ -89,7 +123,8 @@ namespace MediBook.Client.Android.Screens
                     break;
                 case AppointmentStatus.Scheduled:
                     SetButtonState(ScheduleButton, true, "Reschedule Appointment");
-                    if (!AddedToCalander) SetButtonState(CalanderButton, true);
+                    if (!AddedToCalendar) SetButtonState(this.CalendarButton, true, "Add to Calendar");
+                    else SetButtonState(this.CalendarButton, true, "Remove from Calendar");
                     break;
                 case AppointmentStatus.Completed:
                     SetButtonState(ScheduleButton, false, "Appointment Completed");
@@ -137,31 +172,20 @@ namespace MediBook.Client.Android.Screens
         }
 
         [Export]
-        public void AddToCalander(View view)
+        public void AddOrRemoveFromCalendarButtonClicked(View view)
         {
             if (Appointment.ScheduledTime == null) return;
 
-            ContentValues eventValues = new ContentValues();
-
-            eventValues.Put(CalendarContract.Events.InterfaceConsts.CalendarId,
-                BitConverter.ToInt64(this.Appointment.ID.ToByteArray(), 0));
-            eventValues.Put(CalendarContract.Events.InterfaceConsts.Title,
-                "Medibook Appointment: " + Appointment.Type.Type);
-            eventValues.Put(CalendarContract.Events.InterfaceConsts.Description,
-                Appointment.Type.Description);
-            eventValues.Put(CalendarContract.Events.InterfaceConsts.EventLocation,
-                Appointment.Location.Name);
-            eventValues.Put(CalendarContract.Events.InterfaceConsts.Dtstart,
-                Appointment.ScheduledTime.Value.ToUnixEpoch());
-            eventValues.Put(CalendarContract.Events.InterfaceConsts.Dtend,
-                Appointment.ScheduledTime.Value.AddMinutes(appointmentDuration).ToUnixEpoch());
-            eventValues.Put(CalendarContract.Events.InterfaceConsts.EventTimezone,
-                "UTC");
-
-            ContentResolver.Insert(CalendarContract.Events.ContentUri,
-                eventValues);
-
-            SetButtonState(CalanderButton, false);
+            if (AddedToCalendar)
+            {
+                RemoveFromCalendar();
+                SetButtonState(this.CalendarButton, true, "Add to Calendar");
+            }
+            else
+            {
+                AddToCalendar();
+                SetButtonState(this.CalendarButton, true, "Remove from Calendar");
+            }
         }
 
         private void SetButtonState(Button button, bool state, string text = null)
@@ -185,6 +209,37 @@ namespace MediBook.Client.Android.Screens
             }
 
             DoctorImage.SetImageBitmap(imageBitmap);
+        }
+
+        //TODO Bug: event not added if event has already been added and then deleted
+        //Solution: Either use unique id or set deleted column somehow.
+        public void AddToCalendar()
+        {
+            var eventValues = new ContentValues();
+
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.CalendarId,
+                this.CalendarId);
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.Id,
+                EventId);
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.Title,
+                "Medibook Appointment: " + Appointment.Type.Type);
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.Description,
+                Appointment.Type.Description);
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.EventLocation,
+                Appointment.Location.Name);
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.Dtstart,
+                Appointment.ScheduledTime.Value.ToUnixEpoch());
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.Dtend,
+                Appointment.ScheduledTime.Value.AddMinutes(appointmentDuration).ToUnixEpoch());
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.EventTimezone, "UTC");
+            eventValues.Put(CalendarContract.Events.InterfaceConsts.EventEndTimezone, "UTC");
+
+            var uri = ContentResolver.Insert(CalendarContract.Events.ContentUri, eventValues);
+        }
+
+        public void RemoveFromCalendar()
+        {
+            ContentResolver.Delete(EventUri, null, null);
         }
     }
 }

@@ -33,8 +33,8 @@ namespace MediBook.Client.Android.Screens
             AppointmentList = new AppointmentList();
             NotificationList = new NotificationList();
 
-            AddTab("Appointments", Resource.Drawable.Icon, AppointmentList);
-            AddTab("Notifications", Resource.Drawable.Icon, NotificationList);
+            AddTab("Appointments", AppointmentList);
+            AddTab("Notifications", NotificationList);
 
             if (bundle != null)
                 this.ActionBar.SelectTab(this.ActionBar.GetTabAt(bundle.GetInt("AppointmentList")));
@@ -74,11 +74,10 @@ namespace MediBook.Client.Android.Screens
             base.OnSaveInstanceState(outState);
         }
 
-        void AddTab(string tabText, int iconResourceId, Fragment view)
+        void AddTab(string tabText, Fragment view)
         {
             var tab = this.ActionBar.NewTab();
             tab.SetText(tabText);
-            tab.SetIcon(iconResourceId);
 
             // must set event handler before adding tab
             tab.TabSelected += delegate(object sender, ActionBar.TabEventArgs e)
