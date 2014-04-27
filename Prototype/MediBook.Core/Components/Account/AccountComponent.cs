@@ -2,6 +2,7 @@
 
 using MediBook.Client.Core.Components.Account.Models;
 using MediBook.Client.Core.Components.Account.Requests.Post;
+using MediBook.Client.Core.Components.Appointment.Models;
 using MediBook.Client.Core.Exceptions;
 
 namespace MediBook.Client.Core.Components.Account
@@ -41,8 +42,13 @@ namespace MediBook.Client.Core.Components.Account
 
         public async Task SendDeviceID(string registrationID)
         {
-            var request = new AuthPostDeviceID(Core, registrationID);
+            var request = new AuthPostDeviceID(registrationID);
             var response = await request.Execute();
+        }
+
+        public void Logout()
+        {
+            this.Token = null;
         }
     }
 }

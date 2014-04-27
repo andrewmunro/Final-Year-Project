@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 
-using MediBook.Client.Core.Config;
 using MediBook.Client.Core.Database;
+using MediBook.Shared.Config;
 
 namespace MediBook.Client.Core.Components.Database
 {

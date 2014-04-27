@@ -1,4 +1,4 @@
-﻿namespace MediBook.Shared.Models.Enums
+﻿namespace MediBook.Shared.Enums
 {
     public enum AppointmentStatus
     {

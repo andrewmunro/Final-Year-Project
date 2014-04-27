@@ -8,7 +8,9 @@ using Android.Util;
 using Gcm.Client;
 
 using MediBook.Client.Android.Screens;
+using MediBook.Client.Core;
 using MediBook.Client.Core.Components.Account;
+using MediBook.Client.Core.Components.Notification;
 
 namespace MediBook.Client.Android
 {
@@ -31,25 +33,25 @@ namespace MediBook.Client.Android
 
         private const string TAG = "medi-book";
 
-        public AccountComponent AccountComponent { get { return App.AppCore.GetComponent<AccountComponent>(); } }
+        public AccountComponent AccountComponent { get { return AppCore.Instance.GetComponent<AccountComponent>(); } }
+
+        public NotificationComponent NotificationComponent { get { return AppCore.Instance.GetComponent<NotificationComponent>(); } }
 
         protected override void OnMessage(Context context, Intent intent)
         {
-            var msg = new StringBuilder();
+            var dict = new Dictionary<string, string>();
 
             if (intent != null && intent.Extras != null)
             {
                 foreach (var key in intent.Extras.KeySet())
-                    msg.AppendLine(key + "=" + intent.Extras.Get(key).ToString());
+                {
+                    dict[key] = intent.Extras.Get(key).ToString();
+                }
             }
 
-            //Store the message
-            var prefs = GetSharedPreferences(context.PackageName, FileCreationMode.Private);
-            var edit = prefs.Edit();
-            edit.PutString("last_msg", msg.ToString());
-            edit.Commit();
+            NotificationComponent.AddNotification(dict["title"], dict["body"], dict["appointmentId"]);
 
-            CreateNotification("GCM Sample", "Message Received for GCM Sample... Tap to View!");
+            CreateNotification(dict["title"], dict["body"]);
         }
 
         protected override void OnError(Context context, string errorId)
@@ -77,7 +79,7 @@ namespace MediBook.Client.Android
             var uiIntent = new Intent(this, typeof(HomeScreen));
 
             //Create the notification
-            var notification = new Notification(Resource.Drawable.Icon, title) { Flags = NotificationFlags.AutoCancel };
+            var notification = new Notification(Resource.Drawable.Medibook_Icon_72x72, title) { Flags = NotificationFlags.AutoCancel };
 
             //Auto cancel will remove the notification once the user touches it
 

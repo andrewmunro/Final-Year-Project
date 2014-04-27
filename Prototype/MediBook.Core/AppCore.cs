@@ -7,15 +7,22 @@ using MediBook.Client.Core.Components;
 using MediBook.Client.Core.Components.Account;
 using MediBook.Client.Core.Components.Appointment;
 using MediBook.Client.Core.Components.Database;
+using MediBook.Client.Core.Components.Notification;
 
 namespace MediBook.Client.Core
 {
     public class AppCore
     {
+        private static AppCore instance;
+        public static AppCore Instance { get { return instance ?? new AppCore(); } }
+
+
         private List<ComponentBase> Components { get; set; }
 
         public AppCore(bool addComponents = true)
         {
+            instance = this;
+
             this.Components = new List<ComponentBase>();
 
             if (addComponents)
@@ -23,6 +30,7 @@ namespace MediBook.Client.Core
                 this.Components.Add(new AccountComponent(this));
                 this.Components.Add(new AppointmentComponent(this));
                 this.Components.Add(new DatabaseComponent(this));
+                this.Components.Add(new NotificationComponent(this));
             }
         }
 

@@ -4,7 +4,9 @@ using Android.App;
 using Android.Views;
 using Android.Widget;
 
+using MediBook.Shared.Enums;
 using MediBook.Shared.Models;
+using MediBook.Shared.utils;
 
 namespace MediBook.Client.Android.Fragments.Adapters
 {
@@ -41,11 +43,14 @@ namespace MediBook.Client.Android.Fragments.Adapters
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             View view = convertView; // re-use an existing view, if one is available
-            if (view == null) // otherwise create a new one
-                view = context.LayoutInflater.Inflate(Resource.Layout.CustomList, null);
-            view.FindViewById<TextView>(Resource.Id.ListText1).Text = Appointments[position].Type.Type;
-            view.FindViewById<TextView>(Resource.Id.ListText2).Text = Appointments[position].Status.ToString();
+            if (view == null) view = context.LayoutInflater.Inflate(Resource.Layout.CustomList, null);
+
+            var appointment = Appointments[position];
+
+            view.FindViewById<TextView>(Resource.Id.ListText1).Text = appointment.Type.Type;
+            view.FindViewById<TextView>(Resource.Id.ListText2).Text = appointment.Status == AppointmentStatus.Unscheduled ? appointment.Status.ToString() : appointment.ScheduledTime.Value.ToFormattedString();
             view.FindViewById<ImageView>(Resource.Id.ListImage).SetImageResource(Resource.Drawable.Icon);
+            
             return view;
         }
     }

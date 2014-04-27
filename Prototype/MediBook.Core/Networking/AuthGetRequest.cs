@@ -4,10 +4,10 @@ namespace MediBook.Client.Core.Networking
 {
     public class AuthGetRequest : GetRequest
     {
-        public AuthGetRequest(string requestUrl, AppCore core)
+        public AuthGetRequest(string requestUrl)
             : base(requestUrl)
         {
-            var token = core.GetComponent<AccountComponent>().Token;
+            var token = AppCore.Instance.GetComponent<AccountComponent>().Token;
 
             Request.AddHeader("Authorization", string.Format("{0} {1}", token.TokenType, token.AccessToken));
         }

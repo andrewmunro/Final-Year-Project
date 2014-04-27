@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/linearLayout1">
+    <TextView
+        android:text="Pick a time and date to continue."
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="30.5dp"
+        android:layout_marginBottom="50dp" />
+    <Button
+        android:text="Select Time and Date"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/selectDateButton"
+        android:onClick="SelectDate"
+        android:background="@drawable/button_selector"
+        android:layout_marginBottom="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:text="You must select a date!"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="205dp"
+        android:layout_height="70dp"
+        android:id="@+id/errorText"
+        android:layout_marginBottom="70dp"
+        android:layout_marginLeft="90dp"
+        android:textColor="#FF0000"
+        android:gravity="center" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="189.5dp"
+        android:id="@+id/linearLayout7">
+        <Button
+            android:text="Cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancelButton"
+            android:onClick="Cancel"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/button_selector"
+            android:textColor="#FF0000" />
+        <Button
+            android:text="Confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/confirmButton"
+            android:onClick="Confirm"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_selector"
+            android:textColor="#00FF00" />
+    </LinearLayout>
+</LinearLayout>

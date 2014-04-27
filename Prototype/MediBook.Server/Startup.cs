@@ -12,8 +12,6 @@ namespace MediBook.Server
         {
             ConfigureAuth(app);
             ConfigureRoles();
-            //Force initialisation of Notification service.
-            var notificationService = NotificationService.Instance;
         }
     }
 }

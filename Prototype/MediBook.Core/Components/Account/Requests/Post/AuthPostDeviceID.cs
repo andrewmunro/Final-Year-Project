@@ -6,7 +6,7 @@ namespace MediBook.Client.Core.Components.Account.Requests.Post
 {
     public class AuthPostDeviceID : AuthPostRequest
     {
-        public AuthPostDeviceID(AppCore core, string registrationID) : base("Account/DeviceID", core)
+        public AuthPostDeviceID(string registrationID) : base("Account/DeviceID")
         {
             Request.AddParameter("deviceID", registrationID, ParameterType.QueryString);
         }

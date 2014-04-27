@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MediBook.Client.Core.Config;
+
+using MediBook.Shared.Config;
+
 using RestSharp;
 
 namespace MediBook.Client.Core.Networking
@@ -15,6 +17,9 @@ namespace MediBook.Client.Core.Networking
         {
             this.Client = new RestClient(Configuration.ServerUrl);
             this.Request = new RestRequest("api/" + requestUrl, httpMethod);
+
+            //Debug
+            this.Request.OnBeforeDeserialization = response => Console.WriteLine("Recieved response for request '"+ requestUrl +"':\n" + response.Content);
         }
 
         public async Task<IRestResponse> Execute()

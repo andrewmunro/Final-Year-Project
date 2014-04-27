@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -17,12 +18,15 @@ namespace MediBook.Server.Notification
 
         private HttpWebRequest Request { get; set; }
 
-        public PushNotification(NotificationModel notification)
+        public PushNotification(string registrationId, string title, string body, string appointmentId)
         {
+            Trace.WriteLine(String.Format("Attempting GCM Push Notification:"));
+            Trace.WriteLine(String.Format("RegID: {0}  Title: {1}  Body: {2}  appointmentID: {3}", registrationId, title, body, appointmentId));
+
             Request = (HttpWebRequest)WebRequest.Create(GcmUrl);
             Request.Method = RequestMethod;
             Request.KeepAlive = false;
-            string postData = "{ \"registration_ids\": [ \"" + String.Join(",", notification.Appointment.Patient.GcmRegistrationId) + "\" ], \"data\": {\"title\": \"" + notification.Title + "\", \"body\": \"" + notification.Body + "\"}}";
+            string postData = "{ \"registration_ids\": [ \"" + registrationId + "\" ], \"data\": {\"title\": \"" + title + "\", \"body\": \"" + body + "\", \"appointmentId\": \"" + appointmentId + "\"}}";
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
             Request.ContentType = RequestContentType;
             Request.Headers.Add(HttpRequestHeader.Authorization, String.Format("key={0}", ApiKey));
@@ -43,8 +47,11 @@ namespace MediBook.Server.Notification
                 var text = "Response from web service isn't OK";
             }
 
+            Trace.WriteLine("GCM Push Notification Completed");
+
             var reader = new StreamReader(response.GetResponseStream());
             string responseLine = reader.ReadLine();
+            Trace.WriteLine(responseLine);
             reader.Close();
         }
     }

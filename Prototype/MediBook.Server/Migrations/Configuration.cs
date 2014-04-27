@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 
-using MediBook.Server.Models.Enums;
+using MediBook.Shared.Enums;
 using MediBook.Shared.Models;
-using MediBook.Shared.Models.Enums;
 
 namespace MediBook.Server.Migrations
 {

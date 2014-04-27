@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/Selector"
+    android:background="@drawable/appointment_selector"
     android:padding="8dp">
     <LinearLayout
         android:id="@+id/ListItem"
@@ -16,20 +16,22 @@
             android:layout_height="wrap_content"
             android:textColor="#FF7F3300"
             android:textSize="20dip"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:text="Sample Appointment" />
         <TextView
             android:id="@+id/ListText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dip"
             android:textColor="#FF267F00"
-            android:paddingLeft="100dip" />
+            android:paddingLeft="50dip"
+            android:text="testtesttesttesttesttest" />
     </LinearLayout>
     <ImageView
         android:id="@+id/ListImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:padding="5dp"
-        android:src="@drawable/icon"
+        android:src="@drawable/Medibook_Icon_72x72"
         android:layout_alignParentRight="true" />
 </RelativeLayout>

@@ -1,25 +1,53 @@
 ﻿using Android.App;
 using Android.OS;
+using Android.Views;
 
 using MediBook.Client.Android.Fragments;
+using MediBook.Client.Core;
+using MediBook.Client.Core.Components.Account;
+
+using ActionBar = Android.App.ActionBar;
 
 namespace MediBook.Client.Android.Screens
 {
     [Activity(Label = "MediBook", Icon = "@drawable/icon")]
     public class HomeScreen : Activity
     {
+        public AccountComponent AccountComponent { get { return AppCore.Instance.GetComponent<AccountComponent>(); } }
+
         protected override void OnCreate(Bundle bundle)
         {
+            this.SetTheme(Resource.Style.Theme_AppCompat);
             base.OnCreate(bundle);
-            this.SetContentView(Resource.Layout.Home);
+            this.SetContentView(Resource.Layout.HomeScreen);
 
             this.ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
 
-            AddTab("AppointmentList", Resource.Drawable.Icon, new AppointmentList());
-            AddTab("NotificationList", Resource.Drawable.Icon, new NotificationList());
+            AddTab("Appointments", Resource.Drawable.Icon, new AppointmentList());
+            AddTab("Notifications", Resource.Drawable.Icon, new NotificationList());
 
             if (bundle != null)
                 this.ActionBar.SelectTab(this.ActionBar.GetTabAt(bundle.GetInt("AppointmentList")));
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.home_screen_menu, menu);
+
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.logout_button:
+                    AccountComponent.Logout();
+                    this.Finish();
+                    return true;
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }
         }
 
         protected override void OnSaveInstanceState(Bundle outState)

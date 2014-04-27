@@ -3,7 +3,9 @@ using System.Linq;
 using System.Reactive.Linq;
 
 using MediBook.Server.Models;
+using MediBook.Shared.Enums;
 using MediBook.Shared.Models;
+using MediBook.Shared.utils;
 
 namespace MediBook.Server.Notification
 {
@@ -12,18 +14,11 @@ namespace MediBook.Server.Notification
         private readonly DataContext db = new DataContext();
 
         private static NotificationService instance;
-
-        public static NotificationService Instance
-        {
-            get
-            {
-                if (instance == null) return instance = new NotificationService();
-                return instance;
-            }
-        }
+        public static NotificationService Instance { get { return instance ?? new NotificationService(); } }
 
         public NotificationService()
         {
+            instance = this;
             db.Notifications.ToList().ForEach(this.ScheduleNotification);
         }
 
@@ -49,17 +44,35 @@ namespace MediBook.Server.Notification
 
         private void ScheduleNotification(NotificationModel notification)
         {
-            Observable.Timer(notification.DueTime).Subscribe(e => SendNotification(notification.ID));   
+            Observable.Timer(notification.DueTime).Subscribe(e => GetNotificationAndSend(notification.ID));   
         }
 
-        private void SendNotification(Guid notificationID)
+        private void GetNotificationAndSend(Guid notificationID)
         {
             var database = new DataContext();
             var notification = database.Notifications.Find(notificationID);
-            if (notification.Appointment.Patient.GcmRegistrationId == null) Console.WriteLine("Notification failed to send because there are no deviceIDs set");
-            else new PushNotification(notification);
+
+            this.SendNotification(notification.Appointment, notification.Title, notification.Body);
+
             database.Notifications.Remove(notification);
             database.SaveChanges();
+        }
+
+        private void SendNotification(AppointmentModel appointment, string title, string body)
+        {
+            var registrationId = appointment.Patient.GcmRegistrationId;
+            if (registrationId == null) Console.WriteLine("Notification failed to send because there are no deviceIDs set");
+            else new PushNotification(registrationId, title, body, appointment.ID.ToString());
+        }
+
+        public void AddNotification(AppointmentModel appointment, NotificationType scheduled)
+        {
+            switch (scheduled)
+            {
+                case NotificationType.Scheduled:
+                    this.SendNotification(appointment, "Appointment Scheduled", "Your appointment has been successfully scheduled for " + appointment.ScheduledTime.Value.ToFormattedString());
+                    break;
+            }
         }
     }
 }

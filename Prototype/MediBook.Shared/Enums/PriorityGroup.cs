@@ -1,4 +1,4 @@
-﻿namespace MediBook.Server.Models.Enums
+﻿namespace MediBook.Shared.Enums
 {
     public enum PriorityGroup
     {

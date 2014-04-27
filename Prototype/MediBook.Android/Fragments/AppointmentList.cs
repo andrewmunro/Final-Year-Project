@@ -9,13 +9,14 @@ using Android.Widget;
 
 using MediBook.Client.Android.Fragments.Adapters;
 using MediBook.Client.Android.Screens;
+using MediBook.Client.Core;
 using MediBook.Client.Core.Components.Appointment;
 
 namespace MediBook.Client.Android.Fragments
 {
     public class AppointmentList : ListFragment
     {
-        private AppointmentComponent AppointmentComponent { get { return App.AppCore.GetComponent<AppointmentComponent>(); } }
+        private AppointmentComponent AppointmentComponent { get { return AppCore.Instance.GetComponent<AppointmentComponent>(); } }
 
         public override void OnActivityCreated(Bundle savedInstanceState)
         {

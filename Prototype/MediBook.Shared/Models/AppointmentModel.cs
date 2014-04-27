@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-using MediBook.Server.Models.Enums;
-using MediBook.Shared.Models.Enums;
+using MediBook.Shared.Enums;
 
 namespace MediBook.Shared.Models
 {

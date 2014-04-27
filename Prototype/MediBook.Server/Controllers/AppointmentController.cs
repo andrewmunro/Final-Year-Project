@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MediBook.Server.Models;
 using MediBook.Server.Notification;
+using MediBook.Shared.Enums;
 using MediBook.Shared.Models;
 
 namespace MediBook.Server.Controllers
@@ -58,13 +62,40 @@ namespace MediBook.Server.Controllers
             return this.Ok();
         }
 
+        [Route("ScheduleAppointment")]
         [ResponseType(typeof(AppointmentModel))]
-        public IHttpActionResult ScheduleAppointment(Guid id, DateTime startRange, DateTime endRange)
+        public IHttpActionResult ScheduleAppointment(ScheduleAppointmentBinding model)
         {
-            var appointment = this.FindAppointmentForUser(id);
-            //TODO correct scheduling
-            appointment.ScheduledTime = startRange;
+            var time = DateTime.ParseExact(
+                model.Time,
+                "yyyy-MM-ddTHH:mm:ss.fffffffzzz",
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal |
+                DateTimeStyles.AdjustToUniversal);
+
+            var appointment = this.FindAppointmentForUser(model.AppointmentId);
+            if (appointment == null)
+            {
+                return this.BadRequest("Appointment not found!");
+            }
+
+            Trace.WriteLine("Request Time: " + time);
+            Trace.WriteLine("Request Kind: " + time.Kind);
+            Trace.WriteLine("Server Time: " + DateTime.UtcNow);
+            Trace.WriteLine("Future Time: " + (time < DateTime.UtcNow));
+
+            if (time < DateTime.UtcNow)
+            {
+                return this.BadRequest("Date and Time must be in the future!");
+            }
+
+            //TODO Check for conflicting appointments
+            appointment.ScheduledTime = time;
+            appointment.Status = AppointmentStatus.Scheduled;
             db.SaveChanges();
+
+            NotificationService.Instance.AddNotification(appointment, NotificationType.Scheduled);
+
             return this.Ok(appointment);
         }
 

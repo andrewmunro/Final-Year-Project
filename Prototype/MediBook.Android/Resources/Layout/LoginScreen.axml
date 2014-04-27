@@ -71,7 +71,9 @@
         android:layout_marginTop="25dp"
         android:onClick="Login"
         android:text="@string/loginButtonText"
-        android:layout_marginLeft="45dp" />
+        android:layout_marginLeft="45dp"
+        android:background="@drawable/button_selector"
+        android:layout_marginRight="10dp" />
     <Button
         android:id="@+id/registerButton"
         android:layout_width="120dp"
@@ -80,5 +82,6 @@
         android:layout_toRightOf="@+id/loginButton"
         android:layout_marginTop="10dp"
         android:onClick="Register"
-        android:text="@string/registerButtonText" />
+        android:text="@string/registerButtonText"
+        android:background="@drawable/button_selector" />
 </RelativeLayout>

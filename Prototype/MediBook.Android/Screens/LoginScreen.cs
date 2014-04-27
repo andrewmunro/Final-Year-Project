@@ -9,6 +9,7 @@ using Gcm.Client;
 
 using Java.Interop;
 
+using MediBook.Client.Core;
 using MediBook.Client.Core.Components.Account;
 using MediBook.Client.Core.Exceptions;
 
@@ -17,7 +18,7 @@ namespace MediBook.Client.Android.Screens
     [Activity(Label = "MediBook", MainLauncher = true, Icon = "@drawable/icon")]
     public class LoginScreen : Activity
     {
-        public AccountComponent AccountComponent { get { return App.AppCore.GetComponent<AccountComponent>(); } }
+        public AccountComponent AccountComponent { get { return AppCore.Instance.GetComponent<AccountComponent>(); } }
 
         public EditText Username { get { return FindViewById<EditText>(Resource.Id.usernameInput); } }
         public EditText Password { get { return FindViewById<EditText>(Resource.Id.passwordInput); } }
@@ -29,8 +30,9 @@ namespace MediBook.Client.Android.Screens
 
         protected override void OnCreate(Bundle bundle)
         {
+            this.SetTheme(Resource.Style.Theme_AppCompat);
             base.OnCreate(bundle);
-            SetContentView(Resource.Layout.Login);
+            SetContentView(Resource.Layout.LoginScreen);
 
             Dialog = new ProgressDialog(this);
             Dialog.Indeterminate = true;
@@ -40,7 +42,15 @@ namespace MediBook.Client.Android.Screens
             GcmClient.CheckDevice(this);
             GcmClient.CheckManifest(this);
 
-            if (AccountComponent.Token != null) StartActivity(typeof(HomeScreen));
+            if (AccountComponent.Token != null)
+            {
+                if (String.IsNullOrEmpty(RegistrationID))
+                {
+                    GcmClient.Register(this, GcmBroadcastReceiver.SENDER_IDS);
+                }
+
+                StartActivity(typeof(HomeScreen));
+            }
         }
 
         [Export]
