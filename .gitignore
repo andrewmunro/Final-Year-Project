@@ -84,3 +84,5 @@ _ReSharper.*
 *.txt~
 *.swp
 *.swo
+/Prototype/MediBook.Android/libs/16
+/Prototype/MediBook.Android/libs/19.1.0
