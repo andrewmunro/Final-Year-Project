@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Edmx Version="3.0" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <Runtime>
+    <ConceptualModels>
+      <Schema Namespace="MediBook.Server.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AppointmentModel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Status" Type="Self.AppointmentStatus" Nullable="false" />
+          <Property Name="RequiredAppointmentSlots" Type="Int32" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" />
+          <Property Name="ScheduledTime" Type="DateTime" />
+          <Property Name="Priority" Type="Self.PriorityGroup" Nullable="false" />
+          <NavigationProperty Name="Doctor" Relationship="Self.AppointmentModel_Doctor" FromRole="AppointmentModel_Doctor_Source" ToRole="AppointmentModel_Doctor_Target" />
+          <NavigationProperty Name="Location" Relationship="Self.AppointmentModel_Location" FromRole="AppointmentModel_Location_Source" ToRole="AppointmentModel_Location_Target" />
+          <NavigationProperty Name="Patient" Relationship="Self.AppointmentModel_Patient" FromRole="AppointmentModel_Patient_Source" ToRole="AppointmentModel_Patient_Target" />
+          <NavigationProperty Name="Type" Relationship="Self.AppointmentModel_Type" FromRole="AppointmentModel_Type_Source" ToRole="AppointmentModel_Type_Target" />
+        </EntityType>
+        <EntityType Name="DoctorModel">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GcmRegistrationId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LocationModel">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Latititude" Type="Double" Nullable="false" />
+          <Property Name="Longititude" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PatientModel">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GcmRegistrationId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AppointmentTypeModel">
+          <Key>
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="Type" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TimeSlot" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatableByPatients" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AvailableDoctors" Relationship="Self.AppointmentTypeModel_AvailableDoctors" FromRole="AppointmentTypeModel_AvailableDoctors_Source" ToRole="AppointmentTypeModel_AvailableDoctors_Target" />
+        </EntityType>
+        <EntityType Name="NotificationModel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="DueTime" Type="DateTime" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Appointment" Relationship="Self.NotificationModel_Appointment" FromRole="NotificationModel_Appointment_Source" ToRole="NotificationModel_Appointment_Target" />
+        </EntityType>
+        <EnumType Name="AppointmentStatus" IsFlags="false" UnderlyingType="Int32">
+          <Member Name="Scheduled" Value="0" />
+          <Member Name="Unscheduled" Value="1" />
+          <Member Name="InProgress" Value="2" />
+          <Member Name="Completed" Value="3" />
+        </EnumType>
+        <EnumType Name="PriorityGroup" IsFlags="false" UnderlyingType="Int32">
+          <Member Name="P1" Value="0" />
+          <Member Name="P2" Value="1" />
+          <Member Name="P3" Value="2" />
+        </EnumType>
+        <Association Name="AppointmentModel_Doctor">
+          <End Role="AppointmentModel_Doctor_Source" Type="Self.AppointmentModel" Multiplicity="*" />
+          <End Role="AppointmentModel_Doctor_Target" Type="Self.DoctorModel" Multiplicity="0..1" />
+        </Association>
+        <Association Name="AppointmentModel_Location">
+          <End Role="AppointmentModel_Location_Source" Type="Self.AppointmentModel" Multiplicity="*" />
+          <End Role="AppointmentModel_Location_Target" Type="Self.LocationModel" Multiplicity="0..1" />
+        </Association>
+        <Association Name="AppointmentModel_Patient">
+          <End Role="AppointmentModel_Patient_Source" Type="Self.AppointmentModel" Multiplicity="*" />
+          <End Role="AppointmentModel_Patient_Target" Type="Self.PatientModel" Multiplicity="0..1" />
+        </Association>
+        <Association Name="AppointmentTypeModel_AvailableDoctors">
+          <End Role="AppointmentTypeModel_AvailableDoctors_Source" Type="Self.AppointmentTypeModel" Multiplicity="0..1" />
+          <End Role="AppointmentTypeModel_AvailableDoctors_Target" Type="Self.DoctorModel" Multiplicity="*" />
+        </Association>
+        <Association Name="AppointmentModel_Type">
+          <End Role="AppointmentModel_Type_Source" Type="Self.AppointmentModel" Multiplicity="*" />
+          <End Role="AppointmentModel_Type_Target" Type="Self.AppointmentTypeModel" Multiplicity="0..1" />
+        </Association>
+        <Association Name="NotificationModel_Appointment">
+          <End Role="NotificationModel_Appointment_Source" Type="Self.NotificationModel" Multiplicity="*" />
+          <End Role="NotificationModel_Appointment_Target" Type="Self.AppointmentModel" Multiplicity="0..1" />
+        </Association>
+        <EntityContainer Name="DataContext">
+          <EntitySet Name="Appointments" EntityType="Self.AppointmentModel" />
+          <EntitySet Name="Doctors" EntityType="Self.DoctorModel" />
+          <EntitySet Name="Locations" EntityType="Self.LocationModel" />
+          <EntitySet Name="Patients" EntityType="Self.PatientModel" />
+          <EntitySet Name="AppointmentTypes" EntityType="Self.AppointmentTypeModel" />
+          <EntitySet Name="Notifications" EntityType="Self.NotificationModel" />
+          <AssociationSet Name="AppointmentModel_Doctor" Association="Self.AppointmentModel_Doctor">
+            <End Role="AppointmentModel_Doctor_Source" EntitySet="Appointments" />
+            <End Role="AppointmentModel_Doctor_Target" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentModel_Location" Association="Self.AppointmentModel_Location">
+            <End Role="AppointmentModel_Location_Source" EntitySet="Appointments" />
+            <End Role="AppointmentModel_Location_Target" EntitySet="Locations" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentModel_Patient" Association="Self.AppointmentModel_Patient">
+            <End Role="AppointmentModel_Patient_Source" EntitySet="Appointments" />
+            <End Role="AppointmentModel_Patient_Target" EntitySet="Patients" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentTypeModel_AvailableDoctors" Association="Self.AppointmentTypeModel_AvailableDoctors">
+            <End Role="AppointmentTypeModel_AvailableDoctors_Source" EntitySet="AppointmentTypes" />
+            <End Role="AppointmentTypeModel_AvailableDoctors_Target" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentModel_Type" Association="Self.AppointmentModel_Type">
+            <End Role="AppointmentModel_Type_Source" EntitySet="Appointments" />
+            <End Role="AppointmentModel_Type_Target" EntitySet="AppointmentTypes" />
+          </AssociationSet>
+          <AssociationSet Name="NotificationModel_Appointment" Association="Self.NotificationModel_Appointment">
+            <End Role="NotificationModel_Appointment_Source" EntitySet="Notifications" />
+            <End Role="NotificationModel_Appointment_Target" EntitySet="Appointments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </ConceptualModels>
+    <Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CodeFirstDatabase" CdmEntityContainer="DataContext">
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="MediBook.Server.Models.AppointmentModel">
+              <MappingFragment StoreEntitySet="AppointmentModel">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RequiredAppointmentSlots" ColumnName="RequiredAppointmentSlots" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="ScheduledTime" ColumnName="ScheduledTime" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="MediBook.Server.Models.DoctorModel">
+              <MappingFragment StoreEntitySet="DoctorModel">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="DoctorType" ColumnName="DoctorType" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="GcmRegistrationId" ColumnName="GcmRegistrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="MediBook.Server.Models.LocationModel">
+              <MappingFragment StoreEntitySet="LocationModel">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Latititude" ColumnName="Latititude" />
+                <ScalarProperty Name="Longititude" ColumnName="Longititude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="MediBook.Server.Models.PatientModel">
+              <MappingFragment StoreEntitySet="PatientModel">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="GcmRegistrationId" ColumnName="GcmRegistrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppointmentTypes">
+            <EntityTypeMapping TypeName="MediBook.Server.Models.AppointmentTypeModel">
+              <MappingFragment StoreEntitySet="AppointmentTypeModel">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TimeSlot" ColumnName="TimeSlot" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatableByPatients" ColumnName="CreatableByPatients" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="MediBook.Server.Models.NotificationModel">
+              <MappingFragment StoreEntitySet="NotificationModel">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DueTime" ColumnName="DueTime" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AppointmentModel_Doctor" TypeName="MediBook.Server.Models.AppointmentModel_Doctor" StoreEntitySet="AppointmentModel">
+            <EndProperty Name="AppointmentModel_Doctor_Target">
+              <ScalarProperty Name="UserName" ColumnName="Doctor_UserName" />
+            </EndProperty>
+            <EndProperty Name="AppointmentModel_Doctor_Source">
+              <ScalarProperty Name="ID" ColumnName="ID" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="Doctor_UserName" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="AppointmentModel_Location" TypeName="MediBook.Server.Models.AppointmentModel_Location" StoreEntitySet="AppointmentModel">
+            <EndProperty Name="AppointmentModel_Location_Target">
+              <ScalarProperty Name="Name" ColumnName="Location_Name" />
+            </EndProperty>
+            <EndProperty Name="AppointmentModel_Location_Source">
+              <ScalarProperty Name="ID" ColumnName="ID" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="Location_Name" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="AppointmentModel_Patient" TypeName="MediBook.Server.Models.AppointmentModel_Patient" StoreEntitySet="AppointmentModel">
+            <EndProperty Name="AppointmentModel_Patient_Target">
+              <ScalarProperty Name="UserName" ColumnName="Patient_UserName" />
+            </EndProperty>
+            <EndProperty Name="AppointmentModel_Patient_Source">
+              <ScalarProperty Name="ID" ColumnName="ID" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="Patient_UserName" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="AppointmentTypeModel_AvailableDoctors" TypeName="MediBook.Server.Models.AppointmentTypeModel_AvailableDoctors" StoreEntitySet="DoctorModel">
+            <EndProperty Name="AppointmentTypeModel_AvailableDoctors_Source">
+              <ScalarProperty Name="Type" ColumnName="AppointmentTypeModel_Type" />
+            </EndProperty>
+            <EndProperty Name="AppointmentTypeModel_AvailableDoctors_Target">
+              <ScalarProperty Name="UserName" ColumnName="UserName" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="AppointmentTypeModel_Type" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="AppointmentModel_Type" TypeName="MediBook.Server.Models.AppointmentModel_Type" StoreEntitySet="AppointmentModel">
+            <EndProperty Name="AppointmentModel_Type_Target">
+              <ScalarProperty Name="Type" ColumnName="Type_Type" />
+            </EndProperty>
+            <EndProperty Name="AppointmentModel_Type_Source">
+              <ScalarProperty Name="ID" ColumnName="ID" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="Type_Type" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="NotificationModel_Appointment" TypeName="MediBook.Server.Models.NotificationModel_Appointment" StoreEntitySet="NotificationModel">
+            <EndProperty Name="NotificationModel_Appointment_Target">
+              <ScalarProperty Name="ID" ColumnName="Appointment_ID" />
+            </EndProperty>
+            <EndProperty Name="NotificationModel_Appointment_Source">
+              <ScalarProperty Name="ID" ColumnName="ID" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="Appointment_ID" />
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </Mappings>
+    <StorageModels>
+      <Schema Namespace="CodeFirstDatabaseSchema" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AppointmentModel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="RequiredAppointmentSlots" Type="int" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime" Nullable="false" />
+          <Property Name="ScheduledTime" Type="datetime" Nullable="true" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="Doctor_UserName" Type="nvarchar" MaxLength="128" Nullable="true" />
+          <Property Name="Location_Name" Type="nvarchar" MaxLength="128" Nullable="true" />
+          <Property Name="Patient_UserName" Type="nvarchar" MaxLength="128" Nullable="true" />
+          <Property Name="Type_Type" Type="nvarchar" MaxLength="128" Nullable="true" />
+        </EntityType>
+        <EntityType Name="DoctorModel">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ImageURL" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="DoctorType" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="GcmRegistrationId" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="AppointmentTypeModel_Type" Type="nvarchar" MaxLength="128" Nullable="true" />
+        </EntityType>
+        <EntityType Name="LocationModel">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ContactNumber" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="Latititude" Type="float" Nullable="false" />
+          <Property Name="Longititude" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PatientModel">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="GcmRegistrationId" Type="nvarchar(max)" Nullable="true" />
+        </EntityType>
+        <EntityType Name="AppointmentTypeModel">
+          <Key>
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="Type" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="TimeSlot" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="CreatableByPatients" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotificationModel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DueTime" Type="datetime" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="Appointment_ID" Type="uniqueidentifier" Nullable="true" />
+        </EntityType>
+        <Association Name="AppointmentModel_Doctor">
+          <End Role="DoctorModel" Type="Self.DoctorModel" Multiplicity="0..1" />
+          <End Role="AppointmentModel" Type="Self.AppointmentModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DoctorModel">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="AppointmentModel">
+              <PropertyRef Name="Doctor_UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AppointmentModel_Location">
+          <End Role="LocationModel" Type="Self.LocationModel" Multiplicity="0..1" />
+          <End Role="AppointmentModel" Type="Self.AppointmentModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LocationModel">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="AppointmentModel">
+              <PropertyRef Name="Location_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AppointmentModel_Patient">
+          <End Role="PatientModel" Type="Self.PatientModel" Multiplicity="0..1" />
+          <End Role="AppointmentModel" Type="Self.AppointmentModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientModel">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="AppointmentModel">
+              <PropertyRef Name="Patient_UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AppointmentTypeModel_AvailableDoctors">
+          <End Role="AppointmentTypeModel" Type="Self.AppointmentTypeModel" Multiplicity="0..1" />
+          <End Role="DoctorModel" Type="Self.DoctorModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppointmentTypeModel">
+              <PropertyRef Name="Type" />
+            </Principal>
+            <Dependent Role="DoctorModel">
+              <PropertyRef Name="AppointmentTypeModel_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AppointmentModel_Type">
+          <End Role="AppointmentTypeModel" Type="Self.AppointmentTypeModel" Multiplicity="0..1" />
+          <End Role="AppointmentModel" Type="Self.AppointmentModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppointmentTypeModel">
+              <PropertyRef Name="Type" />
+            </Principal>
+            <Dependent Role="AppointmentModel">
+              <PropertyRef Name="Type_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="NotificationModel_Appointment">
+          <End Role="AppointmentModel" Type="Self.AppointmentModel" Multiplicity="0..1" />
+          <End Role="NotificationModel" Type="Self.NotificationModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppointmentModel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NotificationModel">
+              <PropertyRef Name="Appointment_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CodeFirstDatabase">
+          <EntitySet Name="AppointmentModel" EntityType="Self.AppointmentModel" Schema="dbo" Table="AppointmentModels" />
+          <EntitySet Name="DoctorModel" EntityType="Self.DoctorModel" Schema="dbo" Table="DoctorModels" />
+          <EntitySet Name="LocationModel" EntityType="Self.LocationModel" Schema="dbo" Table="LocationModels" />
+          <EntitySet Name="PatientModel" EntityType="Self.PatientModel" Schema="dbo" Table="PatientModels" />
+          <EntitySet Name="AppointmentTypeModel" EntityType="Self.AppointmentTypeModel" Schema="dbo" Table="AppointmentTypeModels" />
+          <EntitySet Name="NotificationModel" EntityType="Self.NotificationModel" Schema="dbo" Table="NotificationModels" />
+          <AssociationSet Name="AppointmentModel_Doctor" Association="Self.AppointmentModel_Doctor">
+            <End Role="DoctorModel" EntitySet="DoctorModel" />
+            <End Role="AppointmentModel" EntitySet="AppointmentModel" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentModel_Location" Association="Self.AppointmentModel_Location">
+            <End Role="LocationModel" EntitySet="LocationModel" />
+            <End Role="AppointmentModel" EntitySet="AppointmentModel" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentModel_Patient" Association="Self.AppointmentModel_Patient">
+            <End Role="PatientModel" EntitySet="PatientModel" />
+            <End Role="AppointmentModel" EntitySet="AppointmentModel" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentTypeModel_AvailableDoctors" Association="Self.AppointmentTypeModel_AvailableDoctors">
+            <End Role="AppointmentTypeModel" EntitySet="AppointmentTypeModel" />
+            <End Role="DoctorModel" EntitySet="DoctorModel" />
+          </AssociationSet>
+          <AssociationSet Name="AppointmentModel_Type" Association="Self.AppointmentModel_Type">
+            <End Role="AppointmentTypeModel" EntitySet="AppointmentTypeModel" />
+            <End Role="AppointmentModel" EntitySet="AppointmentModel" />
+          </AssociationSet>
+          <AssociationSet Name="NotificationModel_Appointment" Association="Self.NotificationModel_Appointment">
+            <End Role="AppointmentModel" EntitySet="AppointmentModel" />
+            <End Role="NotificationModel" EntitySet="NotificationModel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </StorageModels>
+  </Runtime>
+  <Designer>
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <Diagrams >
+      <Diagram DiagramId="d72d05863a7f4e528ebcb16b4692d0ed" Name="Diagram1" ZoomLevel="77">
+        <EntityTypeShape EntityType="MediBook.Server.Models.AppointmentModel" Width="1.5" PointX="2.875" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediBook.Server.Models.DoctorModel" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediBook.Server.Models.LocationModel" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediBook.Server.Models.PatientModel" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediBook.Server.Models.AppointmentTypeModel" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MediBook.Server.Models.NotificationModel" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="MediBook.Server.Models.AppointmentModel_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="MediBook.Server.Models.AppointmentModel_Location" ManuallyRouted="false" />
+        <AssociationConnector Association="MediBook.Server.Models.AppointmentModel_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="MediBook.Server.Models.AppointmentTypeModel_AvailableDoctors" ManuallyRouted="false" />
+        <AssociationConnector Association="MediBook.Server.Models.AppointmentModel_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="MediBook.Server.Models.NotificationModel_Appointment" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</Edmx>

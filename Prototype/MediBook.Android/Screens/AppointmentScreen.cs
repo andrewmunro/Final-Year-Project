@@ -112,10 +112,10 @@ namespace MediBook.Client.Android.Screens
                 };
 
             AppointmentType.Text = Appointment.Type.Type;
-            AppointmentDescription.Text = Appointment.Type.Type;
+            AppointmentDescription.Text = Appointment.Type.Description;
             AppointmentLocation.Text = Appointment.Location.Name;
             AppointmentLocation.Click += (sender, args) => OpenMap();
-            AppointmentDuration.Text = appointmentDuration.ToString();
+            AppointmentDuration.Text = appointmentDuration.ToString() + " minutes";
         }
 
         protected override void OnStart()

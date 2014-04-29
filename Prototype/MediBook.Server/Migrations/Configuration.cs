@@ -41,21 +41,32 @@ namespace MediBook.Server.Migrations
                  });
 
              context.Doctors.AddOrUpdate(new DoctorModel() { UserName = "TestDoctor", FirstName = "Test", LastName = "Doctor", DoctorType = "Primary Care Doctor", ImageURL = "http://www.colourbox.com/preview/4315067-946968-portrait-american-doctor-on-hospital-ward.jpg" });
+             context.Doctors.AddOrUpdate(new DoctorModel() { UserName = "TestDoctor2", FirstName = "John", LastName = "Smith", DoctorType = "Primary Care Doctor", ImageURL = "http://www.womenshealthmag.com/files/images/0511-doctor-0460.jpg" });
 
              context.SaveChanges();
 
-/*             context.AppointmentTypes.AddOrUpdate(
+             context.AppointmentTypes.AddOrUpdate(
                  new AppointmentTypeModel()
                  {
                      Type = "SampleAppointment",
                      AvailableDoctors = context.Doctors.ToList(),
                      CreatableByPatients = true,
-                     Description =
-                         "A sample appointment type. An appointment of this type lasts 30 minutes and can be performed by all doctors. It can be created by patients.",
+                     Description = "A sample appointment type that lasts around 30 minutes.",
                      TimeSlot = 30
                  });
 
-             context.SaveChanges();*/
+             context.AppointmentTypes.AddOrUpdate(
+                 new AppointmentTypeModel()
+                 {
+                     Type = "Day Surgery",
+                     AvailableDoctors = context.Doctors.ToList(),
+                     CreatableByPatients = true,
+                     Description =
+                         "Short day surgery that lasts around 3 hours.",
+                     TimeSlot = 180
+                 });
+
+             context.SaveChanges();
 
              context.Patients.AddOrUpdate(new PatientModel()
              {
@@ -68,7 +79,7 @@ namespace MediBook.Server.Migrations
              context.SaveChanges();
              
 
-            var appointment = new AppointmentModel()
+/*            var appointment = new AppointmentModel()
                                   {
                                       ID = Guid.NewGuid(),
                                       CreationTime = DateTime.Now,
@@ -82,19 +93,7 @@ namespace MediBook.Server.Migrations
                                       Type = context.AppointmentTypes.Find("SampleAppointment")
                                   };
 
-            context.Appointments.AddOrUpdate(appointment);
-
-            context.SaveChanges();
-
-            context.Notifications.AddOrUpdate(
-                new NotificationModel()
-                    {
-                        ID = Guid.NewGuid(),
-                        Appointment = appointment,
-                        Title = "Test Notification!",
-                        Body = "Test notification, lorel ipsum etc.",
-                        DueTime = DateTime.Now.AddMinutes(5)
-                    });
+            context.Appointments.AddOrUpdate(appointment);*/
 
             context.SaveChanges();
         }

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Http;
 
 using MediBook.Server.Exceptions;
+using MediBook.Server.Migrations;
 using MediBook.Shared.Models;
 
 using Microsoft.AspNet.Identity;
@@ -344,8 +345,12 @@ namespace MediBook.Server.Controllers
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                if(model.AccountType == AccountType.Doctor) this.CreateDoctor(model);
-                else this.CreatePatient(model);
+                if (model.AccountType == AccountType.Doctor) this.CreateDoctor(model);
+                else
+                {
+                    this.CreatePatient(model);
+                    ExampleData.Seed(model.UserName);
+                }
             }
             IHttpActionResult errorResult = GetErrorResult(result);
 
