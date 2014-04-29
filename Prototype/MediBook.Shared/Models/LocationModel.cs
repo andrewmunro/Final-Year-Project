@@ -6,6 +6,7 @@ namespace MediBook.Shared.Models
     {
         [Key]
         public string Name { get; set; }
+        public string ContactNumber { get; set; }
         public double Latititude { get; set; }
         public double Longititude { get; set; }
     }

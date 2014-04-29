@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/linearLayout1">
+    <TextView
+        android:text="Unfortunately, that time is taken. Please choose one of the three available appointments or try again with a new time."
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:layout_marginTop="31.5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="70dp" />
+    <Button
+        android:text="Select Time and Date"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/option1"
+        android:onClick="SelectDate"
+        android:background="@drawable/button_selector"
+        android:layout_marginBottom="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <Button
+        android:text="Select Time and Date"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/option2"
+        android:onClick="SelectDate"
+        android:background="@drawable/button_selector"
+        android:layout_marginBottom="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <Button
+        android:text="Select Time and Date"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/option3"
+        android:onClick="SelectDate"
+        android:background="@drawable/button_selector"
+        android:layout_marginBottom="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+</LinearLayout>

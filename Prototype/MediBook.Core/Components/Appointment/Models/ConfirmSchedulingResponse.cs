@@ -1,6 +1,6 @@
 ﻿namespace MediBook.Client.Core.Components.Appointment.Models
 {
-    public class ScheduleResponse
+    public class ConfirmSchedulingResponse
     {
         public string Message { get; set; }
     }

@@ -14,11 +14,11 @@ namespace MediBook.Client.Android.Fragments.Adapters
     {
         public List<AppointmentModel> Appointments;
 
-        private readonly Activity context;
+        private static Activity _context;
 
         public AppointmentListAdapter(Activity context, List<AppointmentModel> appointments)
         {
-            this.context = context;
+            if (context != null) _context = context;
             this.Appointments = appointments;
         }
 
@@ -43,7 +43,7 @@ namespace MediBook.Client.Android.Fragments.Adapters
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             View view = convertView; // re-use an existing view, if one is available
-            if (view == null) view = context.LayoutInflater.Inflate(Resource.Layout.CustomList, null);
+            if (view == null) view = _context.LayoutInflater.Inflate(Resource.Layout.CustomList, null);
 
             var appointment = Appointments[position];
 

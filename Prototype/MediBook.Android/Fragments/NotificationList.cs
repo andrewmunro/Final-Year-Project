@@ -1,49 +1,42 @@
 using System.Collections.Generic;
 
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+
+using MediBook.Client.Android.Fragments.Adapters;
+using MediBook.Client.Android.Screens;
+using MediBook.Client.Core;
+using MediBook.Client.Core.Components.Appointment;
+using MediBook.Client.Core.Components.Notification;
 
 namespace MediBook.Client.Android.Fragments
 {
     public class NotificationList : ListFragment
     {
-        private List<string> Notifications { get; set; }
+        public AppointmentComponent AppointmentComponent { get { return AppCore.Instance.GetComponent<AppointmentComponent>(); } }
 
-        public override void OnActivityCreated(Bundle savedInstanceState)
+        public NotificationComponent NotificationComponent { get { return AppCore.Instance.GetComponent<NotificationComponent>(); } }
+
+        public override void OnStart()
         {
-            base.OnActivityCreated(savedInstanceState);
-
-            Notifications = new List<string>();
-            
-            this.RefreshItems();
-        }
-
-        public void AddNotification(string notification)
-        {
-            Notifications.Add(notification);
-            this.RefreshItems();
-        }
-
-        private void RefreshItems()
-        {
-            this.ListAdapter = new ArrayAdapter<string>(Activity, global::Android.Resource.Layout.SimpleListItem1, Notifications.ToArray());
+            base.OnStart();
+            this.ListAdapter = new NotificationListAdapter(Activity, NotificationComponent.Notifications);
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            return inflater.Inflate(Resource.Layout.NotificationList, container, false);
+            return inflater.Inflate(Resource.Layout.AppointmentList, container, false);
         }
 
         public override void OnListItemClick(ListView l, View v, int position, long id)
         {
-            this.ShowNotification(position);
-        }
+            var notification = NotificationComponent.Notifications[position];
+            AppointmentComponent.ActiveAppointment = AppointmentComponent.Appointments.Find(ap => ap.ID == notification.AppointmentId);
 
-        private void ShowNotification(int appointmentID)
-        {
-
+            StartActivity(new Intent (Activity, typeof(AppointmentScreen)));
         }
 
     }

@@ -34,7 +34,7 @@ namespace MediBook.Client.Core.Components.Account
 
             if (response.ErrorDescription != null)
             {
-                throw new AuthException(response.ErrorDescription);
+                throw new RequestException(response.ErrorDescription);
             }
 
             return this.Token = response;

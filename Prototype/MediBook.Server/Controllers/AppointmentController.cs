@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Globalization;
@@ -9,6 +10,9 @@ using MediBook.Server.Models;
 using MediBook.Server.Notification;
 using MediBook.Shared.Enums;
 using MediBook.Shared.Models;
+using MediBook.Shared.utils;
+
+using Microsoft.Ajax.Utilities;
 
 namespace MediBook.Server.Controllers
 {
@@ -63,40 +67,102 @@ namespace MediBook.Server.Controllers
         }
 
         [Route("ScheduleAppointment")]
-        [ResponseType(typeof(AppointmentModel))]
+        [ResponseType(typeof(ScheduleResponse))]
         public IHttpActionResult ScheduleAppointment(ScheduleAppointmentBinding model)
         {
-            var time = DateTime.ParseExact(
-                model.Time,
-                "yyyy-MM-ddTHH:mm:ss.fffffffzzz",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.AssumeUniversal |
-                DateTimeStyles.AdjustToUniversal);
+            //Passing of the datetime object doesn't work, it's incorrectly serialised by the restsharp library
+            var time = model.Time.ParseFromString();
 
+            var appointment = this.FindAppointmentForUser(model.AppointmentId);
+            if (appointment == null)
+            {
+                return this.Ok(new ScheduleResponse() { Message = "Appointment not found!" });
+            }
+
+            if (time < DateTime.UtcNow)
+            {
+                return this.Ok(new ScheduleResponse() { Message = "Date and Time must be in the future!" });
+            }
+
+            //Get the possible scheduling times...
+            var schedulingResult = ExampleScheduler.GetSchedulingOptions(appointment, time);
+
+            //If the count is 1, it means the original requested time is available, so schedule it!
+            if (schedulingResult.PossibleTimes.Count == 1)
+            {
+                var possibleTime = schedulingResult.PossibleTimes[0];
+
+                CancelConflictingAppointments(possibleTime.AppointmentsToCancel);
+
+                ScheduleAppointment(appointment, possibleTime.Time.ParseFromString());
+            }
+
+            return this.Ok(new ScheduleResponse() { PossibleTimes = schedulingResult.PossibleTimes });
+        }
+
+        [Route("ConfirmSchedulingChoice")]
+        public IHttpActionResult ConfirmSchedulingChoice(ConfirmSchedulingChoiceBinding model)
+        {
             var appointment = this.FindAppointmentForUser(model.AppointmentId);
             if (appointment == null)
             {
                 return this.BadRequest("Appointment not found!");
             }
 
-            Trace.WriteLine("Request Time: " + time);
-            Trace.WriteLine("Request Kind: " + time.Kind);
-            Trace.WriteLine("Server Time: " + DateTime.UtcNow);
-            Trace.WriteLine("Future Time: " + (time < DateTime.UtcNow));
+            CancelConflictingAppointments(model.AppointmentsToCancel);
 
-            if (time < DateTime.UtcNow)
+            Trace.WriteLine("ConfirmSchedulingChoice!");
+            Trace.WriteLine(model.Time);
+            Trace.WriteLine(model.AppointmentId);
+            Trace.WriteLine(model.AppointmentsToCancel);
+
+            ScheduleAppointment(appointment, model.Time.ParseFromString());
+
+            return this.Ok();
+        }
+
+        private void CancelConflictingAppointments(IEnumerable<Guid> appointmentsToCancel)
+        {
+            if (appointmentsToCancel != null)
             {
-                return this.BadRequest("Date and Time must be in the future!");
+                foreach (var conflictingAppointment in appointmentsToCancel)
+                {
+                    this.CancelAppointment(this.FindAppointment(conflictingAppointment));
+                }
             }
+        }
 
-            //TODO Check for conflicting appointments
+        private void ScheduleAppointment(AppointmentModel appointment, DateTime time)
+        {
             appointment.ScheduledTime = time;
             appointment.Status = AppointmentStatus.Scheduled;
             db.SaveChanges();
 
             NotificationService.Instance.AddNotification(appointment, NotificationType.Scheduled);
+        }
+
+        [Route("CancelAppointment")]
+        [ResponseType(typeof(AppointmentModel))]
+        public IHttpActionResult CancelAppointment(CancelAppointmentBinding model)
+        {
+            var appointment = this.FindAppointmentForUser(model.AppointmentId);
+            if (appointment == null)
+            {
+                return this.BadRequest("Appointment not found!");
+            }
+
+            CancelAppointment(appointment);
 
             return this.Ok(appointment);
+        }
+
+        private void CancelAppointment(AppointmentModel appointment)
+        {
+            appointment.ScheduledTime = null;
+            appointment.Status = AppointmentStatus.Unscheduled;
+            db.SaveChanges();
+
+            NotificationService.Instance.AddNotification(appointment, NotificationType.Cancelled);
         }
 
         // DELETE api/Appointment/5
@@ -127,6 +193,11 @@ namespace MediBook.Server.Controllers
         private AppointmentModel FindAppointmentForUser(Guid id)
         {
             return this.GetAppointments().SingleOrDefault(aps => aps.ID == id);
+        }
+
+        private AppointmentModel FindAppointment(Guid id)
+        {
+            return this.db.Appointments.SingleOrDefault(aps => aps.ID == id);
         }
 
         private bool AppointmentExists(Guid id)

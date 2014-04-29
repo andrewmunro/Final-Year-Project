@@ -12,6 +12,7 @@ using Android.Widget;
 using Java.Interop;
 using MediBook.Client.Core;
 using MediBook.Client.Core.Components.Appointment;
+using MediBook.Client.Core.Exceptions;
 using MediBook.Shared.Enums;
 using MediBook.Shared.Models;
 using MediBook.Shared.utils;
@@ -21,6 +22,8 @@ namespace MediBook.Client.Android.Screens
     [Activity(Label = "Appointment Information")]
     public class AppointmentScreen : Activity
     {
+        public AppointmentComponent AppointmentComponent { get { return AppCore.Instance.GetComponent<AppointmentComponent>(); } }
+
         private AppointmentModel Appointment { get { return AppCore.Instance.GetComponent<AppointmentComponent>().ActiveAppointment; } }
 
         private int appointmentDuration { get { return Appointment.RequiredAppointmentSlots * Appointment.Type.TimeSlot; } }
@@ -74,6 +77,7 @@ namespace MediBook.Client.Android.Screens
         public ImageView DoctorImage { get { return FindViewById<ImageView>(Resource.Id.doctorImage); } }
         public TextView DoctorName { get { return FindViewById<TextView>(Resource.Id.doctorName); } }
         public TextView DoctorType { get { return FindViewById<TextView>(Resource.Id.doctorType); } }
+        public TextView ContactNumber { get { return FindViewById<TextView>(Resource.Id.contactNumber); } }
 
         public TextView AppointmentType { get { return FindViewById<TextView>(Resource.Id.appointmentType); } }
         public TextView AppointmentDescription { get { return FindViewById<TextView>(Resource.Id.appointmentDescription); } }
@@ -99,11 +103,24 @@ namespace MediBook.Client.Android.Screens
             this.LoadDoctorImage();
             DoctorName.Text = Appointment.Doctor.FirstName + " " + Appointment.Doctor.LastName + ", MD";
             DoctorType.Text = Appointment.Doctor.DoctorType;
+            ContactNumber.Text = Appointment.Location.ContactNumber;
+            ContactNumber.Click += (sender, args) =>
+                {
+                    var intent = new Intent(Intent.ActionDial);
+                    intent.SetData(global::Android.Net.Uri.Parse("tel:" + ContactNumber.Text.Replace("-", "")));
+                    StartActivity(intent);
+                };
 
             AppointmentType.Text = Appointment.Type.Type;
             AppointmentDescription.Text = Appointment.Type.Type;
             AppointmentLocation.Text = Appointment.Location.Name;
+            AppointmentLocation.Click += (sender, args) => OpenMap();
             AppointmentDuration.Text = appointmentDuration.ToString();
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
 
             if (Appointment.ScheduledTime == null)
             {
@@ -169,6 +186,25 @@ namespace MediBook.Client.Android.Screens
         public void ScheduleOrReshedule(View view)
         {
             StartActivity(new Intent(this, typeof(ScheduleAppointmentScreen)));
+        }
+
+        [Export]
+        public async void CancelAppointment(View view)
+        {
+            try
+            {
+                await AppointmentComponent.CancelAppointment();
+                SetButtonState(CancelButton, false);
+                SetButtonState(ScheduleButton, true, "Schedule Appointment");
+
+                if(AddedToCalendar) RemoveFromCalendar();
+                SetButtonState(this.CalendarButton, false, "Add to Calendar");
+            }
+            catch (RequestException e)
+            {
+                Console.WriteLine("Could not cancel appointment:");
+                Console.WriteLine(e.Message);
+            }
         }
 
         [Export]

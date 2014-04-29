@@ -1628,14 +1628,14 @@ namespace MediBook.Client.Android
 			// aapt resource value: 0x7f07000d
 			public const int collapseActionView = 2131165197;
 			
-			// aapt resource value: 0x7f07006c
-			public const int confirmButton = 2131165292;
+			// aapt resource value: 0x7f07006f
+			public const int confirmButton = 2131165295;
 			
 			// aapt resource value: 0x7f070045
 			public const int contactNumber = 2131165253;
 			
-			// aapt resource value: 0x7f07006e
-			public const int datePicker = 2131165294;
+			// aapt resource value: 0x7f070071
+			public const int datePicker = 2131165297;
 			
 			// aapt resource value: 0x7f07002b
 			public const int default_activity_button = 2131165227;
@@ -1727,11 +1727,11 @@ namespace MediBook.Client.Android
 			// aapt resource value: 0x7f070061
 			public const int loginButton = 2131165281;
 			
-			// aapt resource value: 0x7f070073
-			public const int logout_button = 2131165299;
+			// aapt resource value: 0x7f070076
+			public const int logout_button = 2131165302;
 			
-			// aapt resource value: 0x7f070071
-			public const int map_button = 2131165297;
+			// aapt resource value: 0x7f070074
+			public const int map_button = 2131165300;
 			
 			// aapt resource value: 0x7f070063
 			public const int map_container = 2131165283;
@@ -1763,14 +1763,23 @@ namespace MediBook.Client.Android
 			// aapt resource value: 0x7f070000
 			public const int normal = 2131165184;
 			
+			// aapt resource value: 0x7f07006b
+			public const int option1 = 2131165291;
+			
+			// aapt resource value: 0x7f07006c
+			public const int option2 = 2131165292;
+			
+			// aapt resource value: 0x7f07006d
+			public const int option3 = 2131165293;
+			
 			// aapt resource value: 0x7f07005f
 			public const int passwordInput = 2131165279;
 			
 			// aapt resource value: 0x7f07005e
 			public const int passwordText = 2131165278;
 			
-			// aapt resource value: 0x7f07006d
-			public const int progressBar = 2131165293;
+			// aapt resource value: 0x7f070070
+			public const int progressBar = 2131165296;
 			
 			// aapt resource value: 0x7f070018
 			public const int progress_circular = 2131165208;
@@ -1781,8 +1790,8 @@ namespace MediBook.Client.Android
 			// aapt resource value: 0x7f070032
 			public const int radio = 2131165234;
 			
-			// aapt resource value: 0x7f070072
-			public const int refresh_button = 2131165298;
+			// aapt resource value: 0x7f070075
+			public const int refresh_button = 2131165301;
 			
 			// aapt resource value: 0x7f070062
 			public const int registerButton = 2131165282;
@@ -1823,11 +1832,11 @@ namespace MediBook.Client.Android
 			// aapt resource value: 0x7f07003e
 			public const int search_voice_btn = 2131165246;
 			
-			// aapt resource value: 0x7f07006b
-			public const int selectDateButton = 2131165291;
+			// aapt resource value: 0x7f07006e
+			public const int selectDateButton = 2131165294;
 			
-			// aapt resource value: 0x7f070070
-			public const int setDateTimeButton = 2131165296;
+			// aapt resource value: 0x7f070073
+			public const int setDateTimeButton = 2131165299;
 			
 			// aapt resource value: 0x7f070031
 			public const int shortcut = 2131165233;
@@ -1868,8 +1877,8 @@ namespace MediBook.Client.Android
 			// aapt resource value: 0x7f07004b
 			public const int textView7 = 2131165259;
 			
-			// aapt resource value: 0x7f07006f
-			public const int timePicker = 2131165295;
+			// aapt resource value: 0x7f070072
+			public const int timePicker = 2131165298;
 			
 			// aapt resource value: 0x7f07002e
 			public const int title = 2131165230;
@@ -2027,10 +2036,13 @@ namespace MediBook.Client.Android
 			public const int NotificationList = 2130903073;
 			
 			// aapt resource value: 0x7f030022
-			public const int ScheduleAppointmentScreen = 2130903074;
+			public const int ScheduleAppointmentChoiceScreen = 2130903074;
 			
 			// aapt resource value: 0x7f030023
-			public const int support_simple_spinner_dropdown_item = 2130903075;
+			public const int ScheduleAppointmentScreen = 2130903075;
+			
+			// aapt resource value: 0x7f030024
+			public const int support_simple_spinner_dropdown_item = 2130903076;
 			
 			static Layout()
 			{

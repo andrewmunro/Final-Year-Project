@@ -199,7 +199,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
-    <Compile Include="DumbScheduler.cs" />
+    <Compile Include="ExampleScheduler.cs" />
     <Compile Include="Exceptions\AccountAlreadyExistsException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -219,6 +219,10 @@
     <Compile Include="Migrations\201404271145547_location_changes.cs" />
     <Compile Include="Migrations\201404271145547_location_changes.Designer.cs">
       <DependentUpon>201404271145547_location_changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404290028410_contact_number.cs" />
+    <Compile Include="Migrations\201404290028410_contact_number.Designer.cs">
+      <DependentUpon>201404290028410_contact_number.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -312,6 +316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404271145547_location_changes.resx">
       <DependentUpon>201404271145547_location_changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404290028410_contact_number.resx">
+      <DependentUpon>201404290028410_contact_number.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

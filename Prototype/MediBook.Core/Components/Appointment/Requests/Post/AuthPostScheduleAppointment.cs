@@ -1,6 +1,7 @@
 ﻿using System;
 
 using MediBook.Client.Core.Networking;
+using MediBook.Shared.utils;
 
 namespace MediBook.Client.Core.Components.Appointment.Requests.Post
 {
@@ -10,7 +11,7 @@ namespace MediBook.Client.Core.Components.Appointment.Requests.Post
             : base("Appointment/ScheduleAppointment")
         {
             this.Request.AddParameter("AppointmentId", appointmentId);
-            this.Request.AddParameter("Time", time.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffffffzzz"));
+            this.Request.AddParameter("Time", time.ToUniversalTime().ToParsableString());
         }
     }
 }

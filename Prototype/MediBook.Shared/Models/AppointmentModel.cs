@@ -27,5 +27,14 @@ namespace MediBook.Shared.Models
         public DateTime? ScheduledTime { get; set; }
 
         public PriorityGroup Priority { get; set; }
+
+        public DateTime? ScheduledEndTime
+        {
+            get
+            {
+                if (ScheduledTime == null) return null;
+                return ScheduledTime.Value.AddMinutes(RequiredAppointmentSlots * Type.TimeSlot);
+            }
+        }
     }
 }

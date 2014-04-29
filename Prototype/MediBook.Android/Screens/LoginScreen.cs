@@ -67,7 +67,7 @@ namespace MediBook.Client.Android.Screens
                 this.Dialog.Dismiss();
                 Console.WriteLine("Logged In!");
             }
-            catch (AuthException e)
+            catch (RequestException e)
             {
                 this.Dialog.Dismiss();
                 this.ShowError(e.Message);

@@ -40,6 +40,16 @@ namespace MediBook.Client.Android.Screens
                 this.ActionBar.SelectTab(this.ActionBar.GetTabAt(bundle.GetInt("AppointmentList")));
         }
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            if (RefreshMenuItem != null)
+            {
+                AppointmentList.RefreshItems(RefreshMenuItem);
+            }
+        }
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.home_screen_menu, menu);

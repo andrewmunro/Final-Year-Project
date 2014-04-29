@@ -14,7 +14,7 @@
             android:id="@+id/ListText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FF7F3300"
+            android:textColor="#FFFFFF"
             android:textSize="20dip"
             android:textStyle="italic"
             android:text="Sample Appointment" />
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dip"
-            android:textColor="#FF267F00"
+            android:textColor="#FFFFFF"
             android:paddingLeft="50dip"
             android:text="testtesttesttesttesttest" />
     </LinearLayout>

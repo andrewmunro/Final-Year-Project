@@ -76,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fragments\Adapters\NotificationListAdapter.cs" />
     <Compile Include="Fragments\Adapters\AppointmentListAdapter.cs" />
     <Compile Include="Fragments\AppointmentList.cs" />
     <Compile Include="Fragments\NotificationList.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\LoginScreen.cs" />
     <Compile Include="Screens\MapScreen.cs" />
+    <Compile Include="Screens\ScheduleAppointmentChoiceScreen.cs" />
     <Compile Include="Screens\ScheduleAppointmentScreen.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +113,9 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\Layout\MapScreen.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\ScheduleAppointmentChoiceScreen.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>

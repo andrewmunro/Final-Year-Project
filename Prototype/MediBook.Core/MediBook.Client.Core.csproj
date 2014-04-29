@@ -38,7 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Account\Models\RegistrationResponse.cs" />
-    <Compile Include="Components\Appointment\Models\ScheduleResponse.cs" />
+    <Compile Include="Components\Appointment\Models\CancelResponse.cs" />
+    <Compile Include="Components\Appointment\Models\ConfirmSchedulingResponse.cs" />
     <Compile Include="Components\Account\Models\TokenResponse.cs" />
     <Compile Include="Components\Account\AccountComponent.cs" />
     <Compile Include="Components\Account\Requests\Post\AuthPostDeviceID.cs" />
@@ -46,13 +47,15 @@
     <Compile Include="Components\Account\Requests\Post\PostRegisterAccount.cs" />
     <Compile Include="Components\Appointment\AppointmentComponent.cs" />
     <Compile Include="Components\Appointment\Requests\Get\AuthGetAppointments.cs" />
+    <Compile Include="Components\Appointment\Requests\Post\AuthPostCancelAppointment.cs" />
+    <Compile Include="Components\Appointment\Requests\Post\AuthPostConfirmSchedulingChoice.cs" />
     <Compile Include="Components\Appointment\Requests\Post\AuthPostScheduleAppointment.cs" />
     <Compile Include="Components\ComponentBase.cs" />
     <Compile Include="Components\Database\DatabaseComponent.cs" />
+    <Compile Include="Components\Notification\Models\AndroidNotificationModel.cs" />
     <Compile Include="Components\Notification\NotificationComponent.cs" />
-    <Compile Include="Exceptions\AuthException.cs" />
     <Compile Include="Exceptions\RegistrationException.cs" />
-    <Compile Include="Exceptions\ScheduleException.cs" />
+    <Compile Include="Exceptions\RequestException.cs" />
     <Compile Include="Networking\AuthGetRequest.cs" />
     <Compile Include="Networking\AuthPostRequest.cs" />
     <Compile Include="Networking\GetRequest.cs" />

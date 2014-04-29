@@ -11,6 +11,7 @@ using Java.Interop;
 using MediBook.Client.Core;
 using MediBook.Client.Core.Components.Appointment;
 using MediBook.Client.Core.Exceptions;
+using MediBook.Shared.Enums;
 using MediBook.Shared.utils;
 
 namespace MediBook.Client.Android.Screens
@@ -93,7 +94,7 @@ namespace MediBook.Client.Android.Screens
         [Export]
         public void Cancel(View view)
         {
-            StartActivity(new Intent(this, typeof(AppointmentScreen)));
+            this.Finish();
         }
 
         [Export]
@@ -112,11 +113,14 @@ namespace MediBook.Client.Android.Screens
 
             try
             {
-                await AppointmentComponent.ScheduleAppointment(SelectedTime);
+                var scheduled = await AppointmentComponent.ScheduleAppointment(SelectedTime);
+
                 this.ProgressDialog.Hide();
-                StartActivity(new Intent(this, typeof(AppointmentScreen)));
+
+                if(!scheduled)StartActivity(new Intent(this, typeof(ScheduleAppointmentChoiceScreen)));
+                this.Finish();
             }
-            catch (ScheduleException e)
+            catch (RequestException e)
             {
                 this.ProgressDialog.Dismiss();
                 this.ShowError(e.Message);

@@ -72,6 +72,9 @@ namespace MediBook.Server.Notification
                 case NotificationType.Scheduled:
                     this.SendNotification(appointment, "Appointment Scheduled", "Your appointment has been successfully scheduled for " + appointment.ScheduledTime.Value.ToFormattedString());
                     break;
+                case NotificationType.Cancelled:
+                    this.SendNotification(appointment, "Appointment Cancelled", "Unfortunately your appointment has been cancelled. Please schedule the appointment again!");
+                    break;
             }
         }
     }

@@ -35,6 +35,7 @@ namespace MediBook.Server.Migrations
                  new LocationModel()
                  {
                      Name = "TestHospital",
+                     ContactNumber = "01234-5678910",
                      Latititude = 53.8010068,
                      Longititude = -1.553798
                  });
@@ -43,7 +44,7 @@ namespace MediBook.Server.Migrations
 
              context.SaveChanges();
 
-             context.AppointmentTypes.AddOrUpdate(
+/*             context.AppointmentTypes.AddOrUpdate(
                  new AppointmentTypeModel()
                  {
                      Type = "SampleAppointment",
@@ -54,7 +55,7 @@ namespace MediBook.Server.Migrations
                      TimeSlot = 30
                  });
 
-             context.SaveChanges();
+             context.SaveChanges();*/
 
              context.Patients.AddOrUpdate(new PatientModel()
              {

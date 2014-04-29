@@ -17,12 +17,14 @@ namespace MediBook.Server.Models
 
         public DataContext()
         {
-            Database.SetInitializer(new DropCreateDatabaseAlways<DataContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataContext>());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<AppointmentModel>().Ignore(t => t.ScheduledEndTime);
 
             modelBuilder.Entity<PatientModel>().Map(x =>
             {
