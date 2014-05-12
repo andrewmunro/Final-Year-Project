@@ -14,7 +14,7 @@
 % http://www.sunilpatel.co.uk/thesis-template/
 %
 % License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% CC BY-NC-SA 3.0 (http://creativecommo\textit{•}ns.org/licenses/by-nc-sa/3.0/)
 %
 % Note:
 % Make sure to edit document variables in the Thesis.cls file
@@ -25,14 +25,29 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[11pt, a4paper, oneside]{Thesis} % Paper size, default font size and one-sided paper
+\documentclass[11pt, a4paper]{Thesis} % Paper size, default font size and one-sided paper
 
 \graphicspath{{Pictures/}} % Specifies the directory where pictures are stored
 
 \usepackage{comment}
+\usepackage{pdfpages}
+\usepackage{hyperref} 
+\usepackage{array}
+\usepackage{graphicx}
+
 \usepackage[square, numbers, comma, sort&compress]{natbib} % Use the natbib reference package - read up on this to edit the reference style; if you want text (e.g. Smith et al., 2012) for the in-text references (instead of numbers), remove 'numbers' 
 \hypersetup{urlcolor=blue, colorlinks=true} % Colors hyperlinks in blue - change to black if annoying
 \title{\ttitle} % Defines the thesis title - don't touch this
+
+\let\cleardoublepage\clearpage
+
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter:}{1em}{}
+\titlespacing*{\chapter}{0cm}{-\topskip}{0pt}[0pt]
+\titlespacing{\section}{0pt}{*0}{*0}
+\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
 
 \begin{document}
 
@@ -73,13 +88,13 @@
 \begin{minipage}{0.4\textwidth}
 \begin{flushleft} \large
 \emph{Author:}\\
-\href{http://www.johnsmith.com}{\authornames} % Author name - remove the \href bracket to remove the link
+\href{https://engineering.leeds.ac.uk/cgi-bin/sis/comp/ts/student.cgi?student=200542912}{\authornames} % Author name - remove the \href bracket to remove the link
 \end{flushleft}
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
 \begin{flushright} \large
 \emph{Supervisor:} \\
-\href{http://www.jamessmith.com}{\supname} % Supervisor name - remove the \href bracket to remove the link  
+\href{https://www.engineering.leeds.ac.uk/people/faculty/staff/r.s.kwan}{\supname} % Supervisor name - remove the \href bracket to remove the link  
 \end{flushright}
 \end{minipage}\\[3cm]
  
@@ -94,35 +109,6 @@
 \end{center}
 
 \end{titlepage}
-
-%----------------------------------------------------------------------------------------
-%	DECLARATION PAGE
-%	Your institution may give you a different text to place here
-%----------------------------------------------------------------------------------------
-
-\Declaration{
-
-\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
-
-I, \authornames, declare that this thesis titled, '\ttitle' and the work presented in it are my own. I confirm that:
-
-\begin{itemize} 
-\item[\tiny{$\blacksquare$}] This work was done wholly or mainly while in candidature for a research degree at this University.
-\item[\tiny{$\blacksquare$}] Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
-\item[\tiny{$\blacksquare$}] Where I have consulted the published work of others, this is always clearly attributed.
-\item[\tiny{$\blacksquare$}] Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
-\item[\tiny{$\blacksquare$}] I have acknowledged all main sources of help.
-\item[\tiny{$\blacksquare$}] Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
-\end{itemize}
- 
-Signed:\\
-\rule[1em]{25em}{0.5pt} % This prints a line for the signature
- 
-Date:\\
-\rule[1em]{25em}{0.5pt} % This prints a line to write the date
-}
-
-\clearpage % Start a new page
 
 \begin{comment}
 %----------------------------------------------------------------------------------------
@@ -152,9 +138,7 @@ Dave Barry
 
 \abstract{\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
 
-This project aims to optimise and simplify the medical appointment scheduling process, making it easier and more convenient for both patients and doctors. It also aims to tackle various problems such as attendance, costs and patient satisfaction, by using emerging technology to bridge the current communication gap between patients and the scheduling systems used.
-
-This project is incomplete and submitted as my mid-project report for feedback and advice. Many of these sections are left blank as they are to be completed later, however I have included them for as an overview of the overall structure.
+This project aims to allow more communication with outpatients in regards to their appointments. It also aims to tackle various problems such as attendance, human opportunity costs and patient satisfaction. This will be achieved using emerging technology to bridge the current communication gap between patients and the scheduling systems used.
 
 \clearpage % Start a new page
 
@@ -202,8 +186,15 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 \listofsymbols{ll} % Include a list of Abbreviations (a table of two columns)
 {
 \textbf{NHS} & \textbf{N}ational \textbf{H}ealth \textbf{S}ervice \\
-\textbf{APP} & \textbf{APP}lication (Computer Program) \\
-%\textbf{Acronym} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or \\
+\textbf{APP} & Software \textbf{APP}lication \\
+\textbf{API} & \textbf{A}lication \textbf{P}rogramming \textbf{I}nterface \\
+\textbf{MVC} & \textbf{M}odel \textbf{V}iew \textbf{C}ontroller \\
+\textbf{XML} & \textbf{E}xtensible \textbf{M}arkup \textbf{L}anguage \\
+\textbf{JSON} & \textbf{J}ava\textbf{S}cript \textbf{O}bject \textbf{N}otation language \\
+\textbf{SQL} & \textbf{S}tructured \textbf{Q}uery \textbf{L}anguage \\
+\textbf{LINQ} & \textbf{L}anguage \textbf{IN}tegrated \textbf{Q}uery\\
+\textbf{ER} & \textbf{E}ntity \textbf{R}elationship\\
+\textbf{GCM} & \textbf{G}oogle \textbf{C}loud \textbf{M}essaging\\
 }
 
 %----------------------------------------------------------------------------------------
@@ -216,6 +207,8 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
+
+\setstretch{1.5}
 
 \input{Chapters/Chapter1}
 \input{Chapters/Chapter2} 
@@ -236,7 +229,13 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
+\input{Appendices/PersonalReflection}
+\input{Appendices/ResourcesExternalMaterials}
 \input{Appendices/EthicalIssues}
+\input{Appendices/RegressionTest}
+\input{Appendices/UserEvaluation}
+\input{Appendices/UserEvaluationSurvey}
+\input{Appendices/ProjectResources}
 
 \addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
 

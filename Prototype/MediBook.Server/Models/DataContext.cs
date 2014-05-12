@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 
 using MediBook.Shared.Models;
 
@@ -17,6 +18,13 @@ namespace MediBook.Server.Models
 
         public DataContext()
         {
+            /*
+            Example LINQ statement to select rows of data 
+            from the Patients table where the name is 'Andrew'
+            */
+            var patientsCalledAndrew = Patients.Where(patients => patients.FirstName == "Andrew");
+
+
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataContext>());
         }
 

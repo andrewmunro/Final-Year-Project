@@ -17,33 +17,67 @@ This chapter will focus on the requirements that the proposed solution must fulf
 
 \section{User Requirements}
 
-With the research showing areas that could be focused on to improve user satisfaction, a list of proposed user requirements was  created to identify specific features that would improve the user experience. The following list shows the final requirements for proposed solution:
+With the research showing areas that could be focused on to improve user satisfaction, a list of proposed user requirements was  created to identify specific features that would improve the user experience. The following list shows the final user requirements and features for the proposed solution:
 
 \subsection{Login System}
 
 A login system used to hold the patients identity and allow them to easily manage their appointments on multiple devices. This will also act as a security mechanism to ensure that medical information is only revealed to the patient in question.
 
+The ability to register a new account will also be available using the app, allowing patients to sign up easily.
+
 \subsection{List of Appointments}
 
-A list of the patients appointments which is kept up to date and updated automatically when changes are made. This will display very basic information about each appointment, such as when it occurs and the type of appointment it is.
+A list of the patients appointments which is kept up to date automatically when changes are made. 
+
+This will display very basic information about each appointment, such as when it occurs and the type of appointment it is. An image will also be available per appointment that corresponds to the clinic where that appointment occurs (a logo). This will act as a quick way that the patient can remember where the appointment is located without having to use the app further.
+
+This information will all be retrieved securely from the server using the patients login credentials.
 
 \subsection{Appointment Information}
 
-Tapping on an appointment in the appointment list will bring up relevant information about that appointment, including the doctor's name, location (using a map) and time. It will also include a short description about the appointment, links to useful information and contact details for emergencies.
+Tapping on an appointment in the appointment list will bring up relevant information about that appointment.
 
-\subsection{Appointment Notifications}
+Information about the doctor will be shown; including the doctors name, what medical field they are specialised in to and a portrait photograph. This will allow patients to know more information about the doctor prior to the appointment and be able to recognise the correct doctor when they arrive.
 
-The smart device, after the patient has logged in, will listen for notifications from the server, which contain short messages that displays up-to-date information related to appointments. 
+A contact number will also be supplied which will open the phone's dialer when tapped on. This will allow the patient to easily contact the medical clinic if there are any problems.
 
-Use cases for this feature include time-based reminders so that the patient does not forget, or changes to the patients appointment such as a different location or doctor.
+The location of the appointment will also be shown, stating the name of the location and opening the map if tapped on.
+
+\subsection{Map}
+
+A map will also be provided for every location, accessed through either the map button, or by tapping on a location name. The map will provide real-time location info through the Google Maps API, allowing the patient easy navigation options to find directions and arrive at the correct clinic on time.
 
 \subsection{Scheduling Appointments}
 
-Although appointments are initially set-up by a healthcare professional, patients will have control over the timing of the appointment. 
+Although appointments are initially set-up by a healthcare professional, patients will have limited control over the timing of the appointment. 
 
-The patient will tap an existing appointment, and choose to schedule or re-schedule it. They will be able to post a time window that they want the appointment to occur within, and the server will respond with 3 choices. 
+The patient will be able to tap an existing appointment, and choose to schedule it (or re-schedule if it is already scheduled). They will be able to post a time showing when they want the appointment to occur. 
 
-The patient will then be able to either confirm one of the choices, or alter their timing window.
+The app will then either schedule the appointment if that time is available, or respond with three choices close to the appropriate time. 
+
+The patient will then be able to either confirm one of the choices, or alter their original time.
+
+\subsection{Calendar Synchronisation}
+
+The app will be able to access the patients phone calendar. When an appointment is scheduled, it will add the appointment information to the phones calendar. It will also remove the appointment information if the appointment is cancelled or rescheduled.
+
+Having access to the phones calendar will also provide useful data for the scheduling algorithm to assign or suggest times appropriate to the user, however this will not be available in the prototype.
+
+\subsection{Appointment Notifications}
+
+When appointments are scheduled, rescheduled or cancelled, an automatic notification will be sent to the device informing the patient that their appointment information has been changed. This will prompt the patient to open the app and confirm that their appointment information is all correct.
+
+Notifications will also allow live communication with the patient's device. Clinics will be able to post up to date information about appointments, such as reminding the patient of medication to be taken prior to the appointment, or simply telling them that they are running late.
+
+Notifications will also be able to inform patients when an appointment is available sooner. This will likely occur when another patient cancels and the slot is free.
+
+There are many use cases for notifications, and they will be developed so that any message can be sent to the device and link to a relevant appointment.
+
+\subsection{List of Notifications}
+
+A list of notifications is also required, so the user can keep track of recently occuring changes to their appointments, as well as being able to take action upon them if necessary.
+
+Tapping on a notification will open an appointment information screen relevant to the related appointment.s
 
 %----------------------------------------------------------------------------------------
 
@@ -53,19 +87,21 @@ Alongside the user requirements, a list of system requirements was also created 
 
 \subsection{Cross-Platform}
 
-Running on multiple devices is important so that the usability of the service is maximised. Although this project will only target the Android platform, it will be designed such that it can be easily adapted to run on alternate devices such as iOS and web-browsers.
+Running on multiple devices is important so that the usability of the service is maximised across the entire patient demographic. Although this prototype will only target the Android platform, it will be designed such that it can be easily adapted to run on alternate devices such as iOS and web-browsers.
 
 \subsection{Representational State Transfer (Restful) Web Services}
 
-Because scheduling is a complex problem, the solution needs to be easily integrable with other systems. Multiple endpoints will be available through restful web services, so that components of the system can be easily utilised by other systems. 
+It is highly likely that the proposed solution will need to be integrated with other systems. Because of this, multiple endpoints will be available through restful web services, so that components of the system can be easily utilised by other systems with very few barriers to entry.
 
-For example, many scheduling solutions already exist, written in different programming languages and implemented in different ways. The system should be designed in a way that it can easily 'plug-in' to these scheduling solutions and utilise them fully through restful web-services.
+For example, many scheduling systems already exist, written in different programming languages and implemented in different ways. The system should be designed in a way that it can easily utilise these scheduling systems with minimal complications.
 
 \subsection{One Development Language}
 
 Very few devices share development languages, which can make it troublesome to offer cross platform support.
 
 For the sake of simplicity and given the time requirements, this project will also aim to implement the server and client in the same programming language, C\#.
+
+This will reduce training costs required to build and maintain the system, as well as minimising rewritten code to support different devices.
 
 %----------------------------------------------------------------------------------------
 
@@ -131,13 +167,15 @@ Due to these limitations, the system will only use push notifications for the fo
 
 \begin{figure}[htbp]
 	\centering
-\includegraphics[width=10cm,height=10cm,keepaspectratio]{Figures/gcm.png}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Figures/gcm.png}
 		\rule{35em}{0.5pt}
 	\caption[Google Cloud Messaging - \cite{gcm}]{Google Cloud Messaging - \cite{gcm}}
 	\label{fig:gcm}
 \end{figure}
 
 By using this service, messages are queued and sent to the device as soon as it is available, prompting the user of some kind of notification relating to the application.
+
+Notifications are created by sending a RESTful web request to the google cloud messaging servers, specifying data such as the app id (id of the registered android app), device id (id of the registered android device), and any data to be sent.
 
 \subsubsection{Direct Communication}
 
@@ -154,7 +192,7 @@ All of these direct communication services will be done using restful web-servic
 
 \begin{figure}[htbp]
 	\centering
-\includegraphics[width=10cm,height=10cm,keepaspectratio]{Figures/rest.png}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Figures/rest.png}
 		\rule{35em}{0.5pt}
 	\caption[RESTful Web Services cross-platform communication - \cite{rest}]{RESTful Web Services cross-platform communication - \cite{rest}}
 	\label{fig:rest}
@@ -170,7 +208,7 @@ To service these requests, the system will use 'ASP.Net'.
 
 \begin{figure}[htbp]
 	\centering
-\includegraphics[width=10cm,height=10cm,keepaspectratio]{Figures/asp_example.png}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Figures/asp_example.png}
 		\rule{35em}{0.5pt}
 	\caption[Example of an Asp.Net web service definition]{Example of an Asp.Net web service definition}
 	\label{fig:asp}
@@ -179,15 +217,18 @@ To service these requests, the system will use 'ASP.Net'.
 The figure above shows a method that allows a smart-phone device ID to be registered to a patient's account. This particular method is for use in push notifications, so that the notifications server knows which device to send the patients notifications to. Asp.net will bind this method to the commented url above it by using the 'Route' attribute and the current controller that the method is defined in (the account controller).
 
 %----------------------------------------------------------------------------------------
-
 \subsection{Data Storage}
 
-Appointment data will be stored in a SQL database, requiring relational models to be created for the solution. The finalised models will be discussed in the implementation chapter.
+Appointment data will be stored in an SQL database, requiring relational models to be created for the solution. The finalised models will be discussed in the implementation chapter.
 
-To create and manage the database, the system will use C\#'s 'Entity Framework'
+To create and manage the database, the system will use C\#'s 'Entity Framework' library, which allows for quick and easy development of database technology.
 
 \subsubsection{Entity Framework}
 
 'Entity framework (EF)' is an object-relational mapper that allows developers to work easily with relational data using domain specific objects. This eliminates the need for data access code such as SQL queries, and the database can be easily designed using standard C\# code.
 
 %----------------------------------------------------------------------------------------
+\subsection{Hosting}
+
+The server application and database will require external server hosting to allow the android app communication with it. I will be using the 'Microsoft Azure' cloud platform to host the application as it allows easy integration with Microsoft frameworks such as 'Asp.Net' and C\#.
+

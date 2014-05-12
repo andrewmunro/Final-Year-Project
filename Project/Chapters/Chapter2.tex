@@ -10,21 +10,21 @@
 
 \section{Schedule}
 
-The schedule was designed as a Gantt chart, in order to highlight key points in the project and ensure that they were completed on time and according to the set deadlines. This schedule is subject to change as the project progresses, as many unforeseen issues may arise. I have tried to estimate tasks based on difficulty, assigning more time to key points where it is likely that problems will occur (such as the implementation phase). Any changes will be shown in an adjusted project schedule.
+The schedule was designed as a Gantt chart, in order to highlight key points in the project and ensure that they were completed on time and according to the set deadlines. This schedule is subject to change as the project progresses, as many unforeseen issues may arise. I have tried to estimate tasks based on difficulty, assigning more time to key points where it is likely that problems will occur (such as the implementation phase). 
 
-\begin{figure}[htbp]
+\begin{sidewaysfigure}[htbp]
 	\centering
-\includegraphics[width=10cm,height=10cm,keepaspectratio]{Figures/projectgant.png}
+\includegraphics[width=\textheight, keepaspectratio]{Figures/projectgant.png}
 		\rule{35em}{0.5pt}
-	\caption[Gantt Chart showing the schedule of the project]{Gant Chart showing the schedule of the project}
+	\caption[Gantt Chart showing the schedule of the project]{Gantt Chart showing the schedule of the project}
 	\label{fig:projectgant}
-\end{figure}
+\end{sidewaysfigure}
 
 A table was also created to compare objectives with deliverable deadlines.
 
 \begin{figure}[htbp]
 	\centering
-\includegraphics[width=10cm,height=10cm,keepaspectratio]{Figures/projectplan.png}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Figures/projectplan.png}
 		\rule{35em}{0.5pt}
 	\caption[Table showing the schedule of the project]{Table showing the schedule of the project}
 	\label{fig:projectplan}
@@ -66,15 +66,11 @@ Many problems must be overcome in the implementation phase, such as data securit
 
 \section{Implementation}
 
-The implementation of the system will occur in two separate platforms, the client and the server. These will sometimes overlap as some code will be shared between the client and the server, however for the most part, I will discuss issues unique to each platform separately.
+The implementation of the system will occur in two separate platforms, the client and the server. These will sometimes overlap as some code will be shared between them, however for the most part, I will discuss issues unique to each platform separately.
 
-\subsection{Server Platform}
+For the server platform, I will discuss how I implemented the communication and data storage features and the overall structure of the server system.
 
-For the server platform, I will discuss how I implemented the communication and data storage features, and how it can interface with scheduling software.
-
-\subsection{Client Platform}
-
-For the client platform, I will discuss how the user interface is created, how I improve performance and how well it interfaces with the mobile device.
+For the client platform, I will discuss how the user interface is created, how it communicates with the server and any issues that I encountered.
 
 %----------------------------------------------------------------------------------------
 
@@ -83,12 +79,13 @@ For the client platform, I will discuss how the user interface is created, how I
 The evaluation component will show how well my prototype system does in solving my aims and objectives identified in the project. I will analyse the results of user evaluation methods to evaluate the prototype, discussing the results and identifying key parts of my solution that need to be improved. I plan to evaluate on the following questions:
 
 \begin{itemize}
-	\item How good is the User Interface?
-	\item Does the application work?
-	\item Is the application buggy, does it ever fail?
-	\item Is it missing key features?
-	\item How can it be improved?
-	\item Would the user find the application useful?
+	\item How easy to use is the mobile application?
+	\item Does the solution work? Does it fail occasionally?
+	\item Is the solution missing key features?
+	\item Would patients find the mobile application useful?
+	\item Does the solution reduce wasted appointments?
+	\item Does the solution reduce staff resources required for managing appointments?
+	\item Does the solution increase the user experience when managing appointments?
 \end{itemize}
 
 \section{Conclusion}

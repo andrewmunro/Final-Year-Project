@@ -22,10 +22,49 @@ namespace MediBook.Server.Controllers
     {
         private DataContext db = new DataContext();
 
+        // POST api/Appointment/ScheduleAppointment
+        [Route("ScheduleAppointment")]
+        [ResponseType(typeof(ScheduleResponse))]
+        public IHttpActionResult ScheduleAppointment(ScheduleAppointmentBinding model)
+        {
+            //Passing of the datetime object doesn't work, it's incorrectly serialised by the restsharp library
+            var time = model.Time.ParseFromString();
+
+            var appointment = this.FindAppointmentForUser(model.AppointmentId);
+            if (appointment == null)
+            {
+                return this.Ok(new ScheduleResponse() { Message = "Appointment not found!" });
+            }
+
+            if (time < DateTime.UtcNow)
+            {
+                return this.Ok(new ScheduleResponse() { Message = "Date and Time must be in the future!" });
+            }
+
+            //Get the possible scheduling times...
+            var schedulingResult = ExampleScheduler.GetSchedulingOptions(appointment, time);
+
+            //If the count is 1, it means the original requested time is available, so schedule it!
+            if (schedulingResult.PossibleTimes.Count == 1)
+            {
+                var possibleTime = schedulingResult.PossibleTimes[0];
+
+                CancelConflictingAppointments(possibleTime.AppointmentsToCancel);
+
+                ScheduleAppointment(appointment, possibleTime.Time.ParseFromString());
+            }
+
+            return this.Ok(new ScheduleResponse() { PossibleTimes = schedulingResult.PossibleTimes });
+        }
+
         // GET api/Appointment
         public IQueryable<AppointmentModel> GetAppointments()
         {
-            return this.User.IsInRole("Doctor") ? this.db.Appointments.Where(ap => ap.Doctor.UserName == this.User.Identity.Name) : this.db.Appointments.Where(ap => ap.Patient.UserName == this.User.Identity.Name);
+            //If user is a doctor, return doctor's appointments
+            //Else return patient appointments.
+            return this.User.IsInRole("Doctor") ? 
+                this.db.Appointments.Where(ap => ap.Doctor.UserName == this.User.Identity.Name) :
+                this.db.Appointments.Where(ap => ap.Patient.UserName == this.User.Identity.Name);
         }
 
         // GET api/Appointment/{appointment_guid}
@@ -64,40 +103,6 @@ namespace MediBook.Server.Controllers
             var appointment = db.Appointments.First();
             NotificationService.Instance.AddNotification(appointment.ID, "Test notification", "test notification", DateTime.Now.AddSeconds(10));
             return this.Ok();
-        }
-
-        [Route("ScheduleAppointment")]
-        [ResponseType(typeof(ScheduleResponse))]
-        public IHttpActionResult ScheduleAppointment(ScheduleAppointmentBinding model)
-        {
-            //Passing of the datetime object doesn't work, it's incorrectly serialised by the restsharp library
-            var time = model.Time.ParseFromString();
-
-            var appointment = this.FindAppointmentForUser(model.AppointmentId);
-            if (appointment == null)
-            {
-                return this.Ok(new ScheduleResponse() { Message = "Appointment not found!" });
-            }
-
-            if (time < DateTime.UtcNow)
-            {
-                return this.Ok(new ScheduleResponse() { Message = "Date and Time must be in the future!" });
-            }
-
-            //Get the possible scheduling times...
-            var schedulingResult = ExampleScheduler.GetSchedulingOptions(appointment, time);
-
-            //If the count is 1, it means the original requested time is available, so schedule it!
-            if (schedulingResult.PossibleTimes.Count == 1)
-            {
-                var possibleTime = schedulingResult.PossibleTimes[0];
-
-                CancelConflictingAppointments(possibleTime.AppointmentsToCancel);
-
-                ScheduleAppointment(appointment, possibleTime.Time.ParseFromString());
-            }
-
-            return this.Ok(new ScheduleResponse() { PossibleTimes = schedulingResult.PossibleTimes });
         }
 
         [Route("ConfirmSchedulingChoice")]

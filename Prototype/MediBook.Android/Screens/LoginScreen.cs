@@ -78,6 +78,10 @@ namespace MediBook.Client.Android.Screens
             {
                 GcmClient.Register(this, GcmBroadcastReceiver.SENDER_IDS);
             }
+            else
+            {
+                AccountComponent.SendDeviceID(RegistrationID);
+            }
 
             StartActivity(typeof(HomeScreen));
         }
